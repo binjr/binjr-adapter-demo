@@ -1,0 +1,135 @@
+/*
+ *    Copyright 2019 Frederic Thevenet
+ *
+ *    Licensed under the Apache License, Version 2.0 (the "License");
+ *    you may not use this file except in compliance with the License.
+ *    You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *    Unless required by applicable law or agreed to in writing, software
+ *    distributed under the License is distributed on an "AS IS" BASIS,
+ *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *    See the License for the specific language governing permissions and
+ *    limitations under the License.
+ */
+
+plugins {
+    id 'java'
+    id 'application'
+    id "io.freefair.lombok" version "4.1.2"
+}
+
+ext.IS_TAG = System.getenv('IS_TAG') != null ? System.getenv('IS_TAG') == "true" : false
+ext.IS_RELEASE = IS_TAG && !(System.getenv('REPO_TAG_NAME').endsWith('-SNAPSHOT'))
+ext.VERSION_STEM = "1.0.0"
+ext.PRODUCT_VERSION = "${VERSION_STEM}${IS_RELEASE ? '' : '-SNAPSHOT'}"
+ext.OS_NAME = System.getProperty("os.name").toLowerCase()
+ext.OS_ARCH = System.getProperty("os.arch")
+ext.IS_64 = OS_ARCH.toLowerCase().contains("64")
+ext.IS_MAC = OS_NAME.contains("mac") || OS_NAME.contains("darwin")
+ext.IS_WINDOWS = OS_NAME.contains("windows")
+ext.IS_LINUX = OS_NAME.contains("linux")
+ext.OPENJFX_VERSION = "12.0.2"
+ext.OPENJFX_PLATEFORM_CLASSIFIER = IS_MAC ? 'mac' : IS_WINDOWS ? 'win' : IS_LINUX ? 'linux' : 'unsupported'
+
+group 'eu.fthevenet'
+version "${PRODUCT_VERSION}"
+
+sourceCompatibility = 11
+targetCompatibility = 11
+description 'binjr demo adapter'
+compileJava.options.encoding = 'UTF-8'
+
+dependencies {
+    compileOnly 'eu.binjr:binjr-core:2.10.0-SNAPSHOT'
+    compileOnly "org.openjfx:javafx-base:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
+    compileOnly "org.openjfx:javafx-graphics:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
+    compileOnly "org.openjfx:javafx-controls:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
+    compileOnly "org.openjfx:javafx-fxml:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
+    compileOnly "org.openjfx:javafx-swing:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
+
+    compile("org.apache.logging.log4j:log4j-slf4j-impl:2.12.1") {
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
+    }
+
+    compile("org.apache.logging.log4j:log4j-1.2-api:2.12.1") {
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
+    }
+    compile('fr.jrds:jrdsagent:1.0-RC1') {
+        exclude group: 'mysql', module: 'mysql-connector-java'
+        exclude group: 'postgresql', module: 'postgresql'
+        exclude group: 'org.jolokia', module: '*'
+        exclude group: 'org.glassfish.external', module: 'opendmk_jmxremote_optional_jar'
+        exclude group: 'commons-fileupload', module: 'commons-fileupload'
+        exclude group: 'log4j', module: 'log4j'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+    compile('fr.jrds:jrds-core:1.0-RC1') {
+        exclude group: 'mysql', module: 'mysql-connector-java'
+        exclude group: 'postgresql', module: 'postgresql'
+        exclude group: 'org.jolokia', module: '*'
+        exclude group: 'org.glassfish.external', module: 'opendmk_jmxremote_optional_jar'
+        exclude group: 'commons-fileupload', module: 'commons-fileupload'
+        exclude group: 'log4j', module: 'log4j'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+    compile('fr.jrds:jrds-core:1.0-RC1:webapp') {
+        exclude group: 'mysql', module: 'mysql-connector-java'
+        exclude group: 'postgresql', module: 'postgresql'
+        exclude group: 'org.jolokia', module: '*'
+        exclude group: 'org.glassfish.external', module: 'opendmk_jmxremote_optional_jar'
+        exclude group: 'commons-fileupload', module: 'commons-fileupload'
+        exclude group: 'log4j', module: 'log4j'
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+
+
+}
+
+mainClassName = 'eu.binjr.core.Bootstrap'
+
+jar {
+    manifest {
+        attributes(
+                'Specification-Title': project.name,
+                'Specification-Version': project.version,
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version,
+        )
+    }
+}
+
+task shaded(type: Jar) {
+    manifest {
+        attributes(
+                'Specification-Title': project.name,
+                'Specification-Version': project.version,
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version,
+        )
+    }
+    baseName = project.name + "-shaded"
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+    mavenLocal()
+}
+
+
+run {
+    systemProperties System.getProperties()
+    jvmArgs "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+}
+
