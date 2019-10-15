@@ -22,9 +22,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.Closeable;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.stream.Stream;
 
 public class JrdsDiskImage implements Closeable {
     private static final Logger logger = LogManager.getLogger(JrdsDiskImage.class);
@@ -47,17 +47,23 @@ public class JrdsDiskImage implements Closeable {
             if (!Files.exists(origin)) {
                 throw new FileNotFoundException("Target '" + origin + "' does not exist");
             }
-            if (!Files.isDirectory(origin)) {
-                if (!origin.getFileName().toString().toLowerCase().endsWith(".zip")) {
-                    throw new IOException("Target '" + origin + "' is neither a zip file nor a datadir");
-                }
+            boolean openFromJar = origin.getFileSystem().provider().getScheme().equals("jar");
+            if (openFromJar || !Files.isDirectory(origin)) {
                 logger.info("Loading image from archive: '" + origin + "'...");
                 Path temp = Files.createTempDirectory("binjr-adapter-demo");
                 temp.toFile().deleteOnExit();
-                this.pathToCleanupOnClose = ZipUtils.unzip(origin, (String path) ->
-                        path.startsWith("perfmonitoring/") ||
-                                path.startsWith("perfmonitoring\\") ||
-                                path.startsWith("timezone"), temp, true, 4);
+                if (openFromJar) {
+                    extractFomrJar(originPath, temp);
+                    this.pathToCleanupOnClose = temp;
+                } else {
+                    if (!origin.getFileName().toString().toLowerCase().endsWith(".zip")) {
+                        throw new IOException("Target '" + origin + "' is neither a Jar file, zip file nor a directory");
+                    }
+                    this.pathToCleanupOnClose = ZipUtils.unzip(origin, (String path) ->
+                            path.startsWith("perfmonitoring/") ||
+                                    path.startsWith("perfmonitoring\\") ||
+                                    path.startsWith("timezone"), temp, true, 4);
+                }
                 rootPath = this.pathToCleanupOnClose.resolve("perfmonitoring");
                 libsPath = rootPath.resolve(Paths.get("resources", "extrajava"));
             } else {
@@ -79,6 +85,27 @@ public class JrdsDiskImage implements Closeable {
             // Attempt to clean up
             close();
             throw t;
+        }
+    }
+
+    private void extractFomrJar(Path from, Path to) throws IOException {
+        try (final Stream<Path> sources = Files.walk(from)) {
+            sources.forEach(src -> {
+                final Path dest = to.resolve(from.relativize(src).toString());
+                try {
+                    if (Files.isDirectory(src)) {
+                        if (Files.notExists(dest)) {
+                            logger.trace("Creating directory {}", dest);
+                            Files.createDirectories(dest);
+                        }
+                    } else {
+                        logger.trace("Extracting file {} to {}", src, dest);
+                        Files.copy(src, dest, StandardCopyOption.REPLACE_EXISTING);
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException("Failed to unzip file.", e);
+                }
+            });
         }
     }
 

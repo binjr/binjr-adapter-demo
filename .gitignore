@@ -1,2 +1,4 @@
 /.idea/
 /lombok.config
+/.gradle/
+/build/

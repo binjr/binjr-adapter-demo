@@ -16,9 +16,6 @@
 
 package eu.binjr.sources.demo.adapters;
 
-import eu.binjr.sources.demo.jrds.JrdsDiskImage;
-import eu.binjr.sources.demo.jrds.ReadOnlyProbeClassResolver;
-import eu.binjr.sources.demo.jrds.SeriesBindings;
 import eu.binjr.core.data.adapters.BaseDataAdapter;
 import eu.binjr.core.data.adapters.TimeSeriesBinding;
 import eu.binjr.core.data.exceptions.DataAdapterException;
@@ -27,6 +24,9 @@ import eu.binjr.core.data.timeseries.TimeSeriesProcessor;
 import eu.binjr.core.data.workspace.ChartType;
 import eu.binjr.core.data.workspace.TimeSeriesInfo;
 import eu.binjr.core.data.workspace.UnitPrefixes;
+import eu.binjr.sources.demo.jrds.JrdsDiskImage;
+import eu.binjr.sources.demo.jrds.ReadOnlyProbeClassResolver;
+import eu.binjr.sources.demo.jrds.SeriesBindings;
 import javafx.scene.chart.XYChart;
 import jrds.GraphDesc;
 import jrds.GraphTree;
@@ -44,8 +44,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.net.JarURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.FileSystemNotFoundException;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -72,6 +75,16 @@ public class DemoDataAdapter extends BaseDataAdapter {
      */
     public DemoDataAdapter() throws DataAdapterException {
         super();
+        try {
+            final URI jarFileUri = getClass().getProtectionDomain().getCodeSource().getLocation().toURI();
+            this.archivePath = FileSystems.newFileSystem(Path.of(jarFileUri), null).getPath("/eu/binjr/demo/data/demoJrdsImg/");
+        } catch (IOException | URISyntaxException e) {
+            throw new DataAdapterException("Cannot open jrds image: " + e.getMessage(), e);
+        } catch (FileSystemNotFoundException e) {
+            throw new DataAdapterException("Cannot open jrds image: " + e.getMessage(), e);
+            //this.archivePath = getClass().getResource("/eu/binjr)
+        }
+        //   this.archivePath = Path.of("C:\\Users\\ftt2\\sources\\fthevenet\\binjr-adapter-demo\\data\\demoJrdsImg\\demoJrdsImg.zip");
     }
 
     /**
@@ -82,27 +95,34 @@ public class DemoDataAdapter extends BaseDataAdapter {
      */
     public DemoDataAdapter(Path archivePath) throws DataAdapterException {
         super();
-        this.archivePath = archivePath;
-        Map<String, String> params = new HashMap<>();
-        params.put("archivePath", archivePath.toString());
-
-        loadParams(params);
     }
+//        this.
+////        try {
+////            URI archiveUri =
+////            this.archivePath = Path.of(archiveUri);
+////        } catch (URISyntaxException e) {
+////            throw new DataAdapterException("Cannot open jrds image: " + e.getMessage(), e);
+////        } catch (FileSystemNotFoundException e) {
+////            try {
+////                URI uri = getClass().getProtectionDomain().getCodeSource().getLocation().toURI();
+////                this.archivePath = FileSystems.newFileSystem(Path.of(uri), null).getPath("/eu/binjr/demo/data/demoJrdsImg.zip");
+////            } catch (IOException | URISyntaxException ex) {
+////                throw new DataAdapterException("Cannot open jrds image: " + e.getMessage(), e);
+////            }
+////        }
+////        Map<String, String> params = new HashMap<>();
+////        params.put("archivePath", this.archivePath.toString());
+////
+////        loadParams(params);
+//    }
 
     @Override
     public Map<String, String> getParams() {
-        Map<String, String> params = new HashMap<>();
-        params.put("archivePath", archivePath.toString());
-        return params;
+        return new HashMap<>();
     }
 
     @Override
     public void loadParams(Map<String, String> params) throws DataAdapterException {
-        if (logger.isDebugEnabled()) {
-            logger.debug(() -> "DemoDataAdapter params:");
-            params.forEach((s, s2) -> logger.debug(() -> "key=" + s + ", value=" + s2));
-        }
-        archivePath = Paths.get(validateParameterNullity(params, "archivePath"));
     }
 
     @Override
@@ -198,7 +218,7 @@ public class DemoDataAdapter extends BaseDataAdapter {
             properties.setProperty("readonly", "true");
             properties.setProperty("autocreate", "false");
             properties.setProperty("nologging", "true");
-            // properties.setProperty("loglevel", "info");
+            properties.setProperty("loglevel", "info");
             properties.setProperty("configdir", jrdsImage.getConfigdir().toString());
             properties.setProperty("rrddir", jrdsImage.getRrdDir().toString());
             properties.setProperty("tmpdir", jrdsImage.getTempDir().toString());

@@ -34,6 +34,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.function.Consumer;
 
 /**
  * An implementation of the {@link DataAdapterDialog} class that presents a dialog box to retrieve the parameters specific {@link DemoDataAdapter}
@@ -64,11 +65,7 @@ public class DemoFileAdapterDialog extends DataAdapterDialog<Path> {
                 fileChooser.setTitle("Open Demo Archive");
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Demo archive", "*.zip"));
                 fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All files", "*.*"));
-                var initDir =getMostRecentList().peek().orElse(Paths.get(System.getProperty("user.home")));
-                if (!Files.isDirectory(initDir) && initDir.getParent() != null) {
-                    initDir = initDir.getParent();
-                }
-                fileChooser.setInitialDirectory(initDir.toFile());
+                setChooserInitialDir(fileChooser::setInitialDirectory);
                 File selectedFile = fileChooser.showOpenDialog(Dialogs.getStage(owner));
                 if (selectedFile != null) {
                     setSourceUri(selectedFile.getPath());
@@ -77,14 +74,10 @@ public class DemoFileAdapterDialog extends DataAdapterDialog<Path> {
             sourceMenu.getItems().add(menuItem);
             MenuItem folderMenuItem = new MenuItem("Folder");
             folderMenuItem.setOnAction(eventHandler -> {
-                DirectoryChooser fileChooser = new DirectoryChooser();
-                fileChooser.setTitle("Open Demo Folder");
-                var initDir = getMostRecentList().peek().orElse(Paths.get(System.getProperty("user.home")));
-                if (!Files.isDirectory(initDir) && initDir.getParent() != null) {
-                    initDir = initDir.getParent();
-                }
-              //  fileChooser.setInitialDirectory(initDir.toFile());
-                File selectedFile = fileChooser.showDialog(Dialogs.getStage(owner));
+                DirectoryChooser dirChooser = new DirectoryChooser();
+                dirChooser.setTitle("Open Demo Folder");
+                setChooserInitialDir(dirChooser::setInitialDirectory);
+                File selectedFile = dirChooser.showDialog(Dialogs.getStage(owner));
                 if (selectedFile != null) {
                     setSourceUri(selectedFile.getPath());
                 }
@@ -95,6 +88,20 @@ public class DemoFileAdapterDialog extends DataAdapterDialog<Path> {
             Dialogs.notifyException("Error while displaying file chooser: " + e.getMessage(), e, owner);
         }
         return null;
+    }
+
+    private void setChooserInitialDir(Consumer<File> dirSetter) {
+        try {
+            var initDir = getMostRecentList().peek().orElse(Paths.get(System.getProperty("user.home")));
+            if (!Files.isDirectory(initDir) && initDir.getParent() != null) {
+                initDir = initDir.getParent();
+            }
+            if (initDir.toRealPath().toFile().exists()) {
+                dirSetter.accept(initDir.toFile());
+            }
+        } catch (Exception e) {
+            logger.debug("Failed to set initial dir to file chooser", e);
+        }
     }
 
     @Override

@@ -37,7 +37,6 @@ public class DemoDataAdapterInfo extends BaseDataAdapterInfo {
                 "Copyright 2019 Frederic Thevenet",
                 "",
                 "https://github.com/binjr/binjr-adapter-demo",
-                DemoDataAdapter.class,
-                DemoFileAdapterDialog.class);
+                DemoDataAdapter.class);
     }
 }
