@@ -114,7 +114,6 @@ task shaded(type: Jar) {
                 'Implementation-Version': project.version,
         )
     }
-    baseName = project.name + "-shaded"
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }

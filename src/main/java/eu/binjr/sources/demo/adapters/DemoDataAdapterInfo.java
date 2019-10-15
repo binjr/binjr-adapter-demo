@@ -34,8 +34,8 @@ public class DemoDataAdapterInfo extends BaseDataAdapterInfo {
     public DemoDataAdapterInfo() {
         super("Demo",
                 "Demo Data Adapter",
-                "Copyright 2019 Frederic Thevenet",
-                "",
+                "Copyright © 2019 Frederic Thevenet",
+                "Apache-2.0",
                 "https://github.com/binjr/binjr-adapter-demo",
                 DemoDataAdapter.class);
     }
