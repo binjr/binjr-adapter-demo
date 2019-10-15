@@ -32,8 +32,8 @@ Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/
 Licensed under the [Eclipse Distribution License v. 1.0](https://www.eclipse.org/org/documents/edl-v10.html).
 
 **JRDS**  
-Copyright 2005-2019 Fabrice Bacchella,  
-[Licensed under the BSD 3-Clause License](https://opensource.org/licenses/BSD-3-Clause)
+Copyright 2005-2019 Fabrice Bacchella  
+Licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 **RRD4J**  
 Copyright (c) 2011-2019 The RRD4J Authors  

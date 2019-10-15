@@ -121,6 +121,7 @@ task shaded(type: Jar) {
 
 repositories {
     mavenCentral()
+    jcenter()
     maven {
         url "https://oss.sonatype.org/content/repositories/snapshots"
     }
