@@ -1,0 +1,61 @@
+trigger:
+  branches:
+    include:
+      - master
+      - '*-dev'
+  tags:
+    include:
+      - v*
+
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+variables:
+  system.debug: false
+  isTag: 'false'
+  isSnapshot: 'false'
+
+jobs:
+  - job: build
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - checkout: self 
+        lfs: true
+
+      - bash: |
+          echo '##vso[task.setvariable variable=isTag;]true'
+        condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+
+      - bash: |
+          echo '##vso[task.setvariable variable=isSnapshot;]true'
+        condition: and(succeeded(), endsWith(variables['Build.SourceBranch'], '-SNAPSHOT'))
+
+      - task: Gradle@2
+        env:
+          IS_TAG: $(isTag)
+          REPO_TAG_NAME: $(Build.SourceBranchName)
+        inputs:
+          workingDirectory: ''
+          gradleWrapperFile: 'gradlew'
+          gradleOptions: '-Xmx3072m'
+          javaHomeOption: 'JDKVersion'
+          jdkVersionOption: '1.12'
+          jdkArchitectureOption: 'x64'
+          publishJUnitResults: false
+          testResultsFiles: '**/TEST-*.xml'
+          tasks: 'jar'
+
+      - task: GithubRelease@0
+        condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+        inputs:
+          gitHubConnection: binjr-bot
+          repositoryName: binjr/binjr-adapter-demo
+          action: edit
+          tag: $(Build.SourceBranchName)
+          assets: |
+            $(System.DefaultWorkingDirectory)/build/libs/*.jar
+          assetUploadMode: 'replace'
+          releaseNotesSource: 'file'
+          releaseNotesFile: $(System.DefaultWorkingDirectory)/UNRELEASED.md
+          addChangeLog: false
+          isPreRelease: $(isSnapshot)
