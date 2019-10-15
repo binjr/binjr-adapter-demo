@@ -3,6 +3,7 @@ trigger:
     include:
       - master
       - '*-dev'
+      - azure-pipelines
   tags:
     include:
       - v*
@@ -43,7 +44,7 @@ jobs:
           jdkArchitectureOption: 'x64'
           publishJUnitResults: false
           testResultsFiles: '**/TEST-*.xml'
-          tasks: 'jar'
+          tasks: 'shaded'
 
       - task: GithubRelease@0
         condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
