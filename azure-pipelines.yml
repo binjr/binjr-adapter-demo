@@ -33,6 +33,8 @@ jobs:
 
       - task: Gradle@2
         env:
+          GPG_KEY_NAME: $(gpg.keyname)
+          GPG_PASSPHRASE: $(gpg.passphrase)
           IS_TAG: $(isTag)
           REPO_TAG_NAME: $(Build.SourceBranchName)
         inputs:
@@ -44,7 +46,7 @@ jobs:
           jdkArchitectureOption: 'x64'
           publishJUnitResults: false
           testResultsFiles: '**/TEST-*.xml'
-          tasks: 'shaded'
+          tasks: 'signPackageDistribution'
 
       - task: GithubRelease@0
         condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
@@ -54,7 +56,8 @@ jobs:
           action: edit
           tag: $(Build.SourceBranchName)
           assets: |
-            $(System.DefaultWorkingDirectory)/build/libs/*.jar
+            $(System.DefaultWorkingDirectory)/build/*.zip
+            $(System.DefaultWorkingDirectory)/build/*.asc
           assetUploadMode: 'replace'
           releaseNotesSource: 'file'
           releaseNotesFile: $(System.DefaultWorkingDirectory)/UNRELEASED.md

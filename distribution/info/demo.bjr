@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Workspace dividerPosition="0.18475935828877005" schemaVersion="2.2.0" producerInfo="binjr v2.10.0-SNAPSHOT (build #000)">
+    <Sources>
+        <Source adapter="eu.binjr.sources.demo.adapters.DemoDataAdapter" id="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" name="[Demo]">
+            <AdapterParameters/>
+        </Source>
+    </Sources>
+    <Worksheets>
+        <Worksheet chartLayout="STACKED" dividerPosition="0.6960285132382892" fromDateTime="2019-10-01T22:28:52Z[UTC]" name="CPU usage &amp; Memory" timeRangeLinked="false" timeZone="UTC" toDateTime="2019-10-02T10:28:52Z[UTC]">
+            <Charts>
+                <Chart autoScaleYAxis="true" chartType="STACKED" graphOpacity="0.4" name="CPU usage" showAreaOutline="true" strokeWidth="1.0" unit="%" unitPrefixes="METRIC" yAxisMaxValue="110.00000000000003" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0xffb399ff" displayName="Time processing interrupts" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="BayULrYYAc5vfDyDzKrIrQ==" path="/Sorted by host/myserver.prod.example.org/System/Load?CPU usage" color="0x000000ff" legend="Time processing interrupts" prefix="METRIC" graphType="AREA" unitName="%" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Load/CPU usage/Time processing interrupts"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0xff0000ff" displayName="System CPU time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="A52ybo98LsEK7DmLTDsgOQ==" path="/Sorted by host/myserver.prod.example.org/System/Load?CPU usage" color="0xff0000ff" legend="System CPU time" prefix="METRIC" graphType="STACKED" unitName="%" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Load/CPU usage/System CPU time"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x008000ff" displayName="User CPU time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="aEGIyYI5uD+7llnX8VZb6A==" path="/Sorted by host/myserver.prod.example.org/System/Load?CPU usage" color="0x0000ffff" legend="User CPU time" prefix="METRIC" graphType="STACKED" unitName="%" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Load/CPU usage/User CPU time"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0xffc800ff" displayName="Nice CPU time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="6IZMHJojyREeud/la/CcvQ==" path="/Sorted by host/myserver.prod.example.org/System/Load?CPU usage" color="0xffc800ff" legend="Nice CPU time" prefix="METRIC" graphType="STACKED" unitName="%" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Load/CPU usage/Nice CPU time"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x008080ff" displayName="Iowait CPU time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="PDMJtq5Q0aka5/rHDa0cmA==" path="/Sorted by host/myserver.prod.example.org/System/Load?CPU usage" color="0x008080ff" legend="Iowait CPU time" prefix="METRIC" graphType="STACKED" unitName="%" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Load/CPU usage/Iowait CPU time"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x999999ff" displayName="Idle CPU time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="lcMGFb4yIfOC40XPmBodZA==" path="/Sorted by host/myserver.prod.example.org/System/Load?CPU usage" color="0x00ff00ff" legend="Idle CPU time" prefix="METRIC" graphType="STACKED" unitName="%" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Load/CPU usage/Idle CPU time"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+                <Chart autoScaleYAxis="true" chartType="STACKED" graphOpacity="0.4" name="RAM Memory usage" showAreaOutline="true" strokeWidth="1.0" unit="Bytes" unitPrefixes="BINARY" yAxisMaxValue="2.967997241275733E11" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0xff0000ff" displayName="Part of Slab, that cannot be reclaimed" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="SUnreclaim" path="/Sorted by host/myserver.prod.example.org/System/Memory?RAM Memory usage" color="0xff0000ff" legend="Part of Slab, that cannot be reclaimed" prefix="BINARY" graphType="AREA" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/RAM Memory usage/Part of Slab, that cannot be reclaimed"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0xff00ffff" displayName="Part of Slab, that might be reclaimed" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="SReclaimable" path="/Sorted by host/myserver.prod.example.org/System/Memory?RAM Memory usage" color="0xff00ffff" legend="Part of Slab, that might be reclaimed" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/RAM Memory usage/Part of Slab, that might be reclaimed"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0xffc800ff" displayName="Vmalloc usage" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="VmallocUsed" path="/Sorted by host/myserver.prod.example.org/System/Memory?RAM Memory usage" color="0xffc800ff" legend="Vmalloc usage" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/RAM Memory usage/Vmalloc usage"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x008080ff" displayName="Kernel stack" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="KernelStack" path="/Sorted by host/myserver.prod.example.org/System/Memory?RAM Memory usage" color="0x008080ff" legend="Kernel stack" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/RAM Memory usage/Kernel stack"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0xff0000ff" displayName="Page Tables" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="6hWD+kZ6mcAnxXxTVjWN0Q==" path="/Sorted by host/myserver.prod.example.org/System/Memory?RAM Memory usage" color="0xff0000ff" legend="Page Tables" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/RAM Memory usage/Page Tables"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x008000ff" displayName="Anonymous memory" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="AnonPages" path="/Sorted by host/myserver.prod.example.org/System/Memory?RAM Memory usage" color="0x00ff00ff" legend="Anonymous memory" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/RAM Memory usage/Anonymous memory"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x808000ff" displayName="Other used memory" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="MV9a6xalU7PkWx9ZUZNpBQ==" path="/Sorted by host/myserver.prod.example.org/System/Memory?RAM Memory usage" color="0x808000ff" legend="Other used memory" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/RAM Memory usage/Other used memory"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x00ffffff" displayName="Memory mapped files in the pagecache" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="Mapped" path="/Sorted by host/myserver.prod.example.org/System/Memory?RAM Memory usage" color="0x00ffffff" legend="Memory mapped files in the pagecache" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/RAM Memory usage/Memory mapped files in the pagecache"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x0000ffff" displayName="Dirty memory in the pagecache" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="0BFq/MTsenD4s6cKGdNtwA==" path="/Sorted by host/myserver.prod.example.org/System/Memory?RAM Memory usage" color="0x0000ffff" legend="Dirty memory in the pagecache" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/RAM Memory usage/Dirty memory in the pagecache"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x008080ff" displayName="Cached file in the pagecache" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="wW27qLNig6bqcjQeMgX+wQ==" path="/Sorted by host/myserver.prod.example.org/System/Memory?RAM Memory usage" color="0x008080ff" legend="Cached file in the pagecache" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/RAM Memory usage/Cached file in the pagecache"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0xffc800ff" displayName="Memory in buffer cache" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="GraphBuffers" path="/Sorted by host/myserver.prod.example.org/System/Memory?RAM Memory usage" color="0xffc800ff" legend="Memory in buffer cache" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/RAM Memory usage/Memory in buffer cache"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x000000ff" displayName="Memory free" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="GraphMemFree" path="/Sorted by host/myserver.prod.example.org/System/Memory?RAM Memory usage" color="0x000000ff" legend="Memory free" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/RAM Memory usage/Memory free"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0xff0000ff" displayName="Swap used" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="vysPML2DBc+tGaJ9uUyvoQ==" path="/Sorted by host/myserver.prod.example.org/System/Memory?RAM Memory usage" color="0xff0000ff" legend="Swap used" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/RAM Memory usage/Swap used"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x0000ffff" displayName="Memory in both RAM and swap" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="SwapCached" path="/Sorted by host/myserver.prod.example.org/System/Memory?RAM Memory usage" color="0x0000ffff" legend="Memory in both RAM and swap" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/RAM Memory usage/Memory in both RAM and swap"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+                <Chart autoScaleYAxis="true" chartType="STACKED" graphOpacity="0.4" name="Anonymous Memory informations" showAreaOutline="true" strokeWidth="1.0" unit="Bytes" unitPrefixes="BINARY" yAxisMaxValue="2.4015232147456E11" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0x008000ff" displayName="Anonymous pages in RAM" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="AD6l9exLzhSbeaLt9ko2NQ==" path="/Sorted by host/myserver.prod.example.org/System/Memory?Anonymous Memory informations" color="0x00ff00ff" legend="Anonymous pages in RAM" prefix="BINARY" graphType="AREA" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/Anonymous Memory informations/Anonymous pages in RAM"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x0000ffff" displayName="Anonymous pages both in swap and RAM" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="SwapCachedGraph" path="/Sorted by host/myserver.prod.example.org/System/Memory?Anonymous Memory informations" color="0x0000ffff" legend="Anonymous pages both in swap and RAM" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/Anonymous Memory informations/Anonymous pages both in swap and RAM"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0xff0000ff" displayName="Anonymous pages in swap" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="kjWWDSDbzhuHW51STPk2OQ==" path="/Sorted by host/myserver.prod.example.org/System/Memory?Anonymous Memory informations" color="0xff0000ff" legend="Anonymous pages in swap" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/Anonymous Memory informations/Anonymous pages in swap"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x000000ff" displayName="Committed memory" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="Committed_AS" path="/Sorted by host/myserver.prod.example.org/System/Memory?Anonymous Memory informations" color="0x000000ff" legend="Committed memory" prefix="BINARY" graphType="LINE" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Memory/Anonymous Memory informations/Committed memory"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+            </Charts>
+        </Worksheet>
+        <Worksheet chartLayout="STACKED" dividerPosition="0.6960285132382892" fromDateTime="2019-10-01T22:28:52Z[UTC]" name="Disk" timeRangeLinked="false" timeZone="UTC" toDateTime="2019-10-02T10:28:52Z[UTC]">
+            <Charts>
+                <Chart autoScaleYAxis="true" chartType="LINE" graphOpacity="0.4" name="Activity as bytes/s" showAreaOutline="true" strokeWidth="1.0" unit="bytes/s" unitPrefixes="BINARY" yAxisMaxValue="1.0053030951822221E8" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0x999999ff" displayName="Number of bytes read" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="nrbytes" path="/Sorted by host/myserver.prod.example.org/Disk/Disk activity/data?Activity as bytes/s" color="0x3cb371ff" legend="Number of bytes read" prefix="BINARY" graphType="STACKED" unitName="bytes/s" treeHierarchy="/[Demo]/myserver.prod.example.org/Disk/Disk activity/data/Activity as bytes/s/Number of bytes read"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x4d66ccff" displayName="Number of bytes written" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="wbytes" path="/Sorted by host/myserver.prod.example.org/Disk/Disk activity/data?Activity as bytes/s" color="0x0000ffff" legend="Number of bytes written" prefix="BINARY" graphType="LINE" unitName="bytes/s" treeHierarchy="/[Demo]/myserver.prod.example.org/Disk/Disk activity/data/Activity as bytes/s/Number of bytes written"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+                <Chart autoScaleYAxis="true" chartType="LINE" graphOpacity="0.4" name="Activity as operation/s" showAreaOutline="true" strokeWidth="1.0" unit="operations/s" unitPrefixes="METRIC" yAxisMaxValue="2081.1694444444443" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0x4d66ccff" displayName="Number of write accesses" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="w" path="/Sorted by host/myserver.prod.example.org/Disk/Disk activity/data?Activity as operation/s" color="0x0000ffff" legend="Number of write accesses" prefix="METRIC" graphType="LINE" unitName="operations/s" treeHierarchy="/[Demo]/myserver.prod.example.org/Disk/Disk activity/data/Activity as operation/s/Number of write accesses"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x999999ff" displayName="Number of read accesses" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="r" path="/Sorted by host/myserver.prod.example.org/Disk/Disk activity/data?Activity as operation/s" color="0xe6e6faff" legend="Number of read accesses" prefix="METRIC" graphType="STACKED" unitName="operations/s" treeHierarchy="/[Demo]/myserver.prod.example.org/Disk/Disk activity/data/Activity as operation/s/Number of read accesses"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+                <Chart autoScaleYAxis="true" chartType="AREA" graphOpacity="0.4" name="Average queue size" showAreaOutline="true" strokeWidth="1.0" unit="waiting io" unitPrefixes="METRIC" yAxisMaxValue="48.16166666666666" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0x804d80ff" displayName="Average queue size" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="qu-sz" path="/Sorted by host/myserver.prod.example.org/Disk/Disk activity/data?Average queue size" color="0x0000ffff" legend="Average queue size" prefix="METRIC" graphType="LINE" unitName="waiting io" treeHierarchy="/[Demo]/myserver.prod.example.org/Disk/Disk activity/data/Average queue size/Average queue size"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+                <Chart autoScaleYAxis="true" chartType="LINE" graphOpacity="0.4" name="Average requests size" showAreaOutline="true" strokeWidth="1.0" unit="bytes" unitPrefixes="BINARY" yAxisMaxValue="447591.80276364664" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0xb3b3b3ff" displayName="Average requests size on read" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="diskIOBLKRSZ" path="/Sorted by host/myserver.prod.example.org/Disk/Disk activity/data?Average requests size" color="0x00ff00ff" legend="Average requests size on read" prefix="BINARY" graphType="LINE" unitName="bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/Disk/Disk activity/data/Average requests size/Average requests size on read"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x334db3ff" displayName="Average requests size on write" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="diskIOBLKWSZ" path="/Sorted by host/myserver.prod.example.org/Disk/Disk activity/data?Average requests size" color="0x0000ffff" legend="Average requests size on write" prefix="BINARY" graphType="LINE" unitName="bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/Disk/Disk activity/data/Average requests size/Average requests size on write"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+                <Chart autoScaleYAxis="true" chartType="AREA" graphOpacity="0.4" name="Average wait time" showAreaOutline="true" strokeWidth="1.0" unit="s" unitPrefixes="METRIC" yAxisMaxValue="0.2684468061654064" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0xe6b34dff" displayName="Average wait time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="4XnjZ4PhKOit07MMa40/EA==" path="/Sorted by host/myserver.prod.example.org/Disk/Disk activity/data?Average wait time" color="0x0000ffff" legend="Average wait time" prefix="METRIC" graphType="LINE" unitName="s" treeHierarchy="/[Demo]/myserver.prod.example.org/Disk/Disk activity/data/Average wait time/Average wait time"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+            </Charts>
+        </Worksheet>
+        <Worksheet chartLayout="STACKED" dividerPosition="0.6960285132382892" fromDateTime="2019-10-01T22:28:52Z[UTC]" name="JVM" timeRangeLinked="false" timeZone="UTC" toDateTime="2019-10-02T10:28:52Z[UTC]">
+            <Charts>
+                <Chart autoScaleYAxis="true" chartType="STACKED" graphOpacity="0.4" name="GC Count" showAreaOutline="true" strokeWidth="1.0" unit="Collections/s" unitPrefixes="METRIC" yAxisMaxValue="9.45614035087719" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0x4d66ccff" displayName="Major (Mark and sweep) collections count" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="MS Coll Count" path="/Sorted by host/myserver.prod.example.org/Services/JVM/front-server?GC Count" color="0x0000ffff" legend="Major (Mark and sweep) collections count" prefix="METRIC" graphType="LINE" unitName="Collections/s" treeHierarchy="/[Demo]/myserver.prod.example.org/Services/JVM/front-server/GC Count/Major (Mark and sweep) collections count"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x008000ff" displayName="Minor collection count" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="Copy Coll Count" path="/Sorted by host/myserver.prod.example.org/Services/JVM/front-server?GC Count" color="0x00ff00ff" legend="Minor collection count" prefix="METRIC" graphType="LINE" unitName="Collections/s" treeHierarchy="/[Demo]/myserver.prod.example.org/Services/JVM/front-server/GC Count/Minor collection count"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+                <Chart autoScaleYAxis="true" chartType="STACKED" graphOpacity="0.4" name="GC Time" showAreaOutline="true" strokeWidth="1.0" unit="s" unitPrefixes="METRIC" yAxisMaxValue="0.16752837875417131" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0x334db3ff" displayName="Major (Mark and sweep) collection time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="efMqEGwJvwtuF2O6OUMh+g==" path="/Sorted by host/myserver.prod.example.org/Services/JVM/front-server?GC Time" color="0x0000ffff" legend="Major (Mark and sweep) collection time" prefix="METRIC" graphType="AREA" unitName="s" treeHierarchy="/[Demo]/myserver.prod.example.org/Services/JVM/front-server/GC Time/Major (Mark and sweep) collection time"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x008000ff" displayName="Minor collection time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="2MES0LHiezwNrDH0ez/UTA==" path="/Sorted by host/myserver.prod.example.org/Services/JVM/front-server?GC Time" color="0x00ff00ff" legend="Minor collection time" prefix="METRIC" graphType="STACKED" unitName="s" treeHierarchy="/[Demo]/myserver.prod.example.org/Services/JVM/front-server/GC Time/Minor collection time"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+                <Chart autoScaleYAxis="true" chartType="STACKED" graphOpacity="0.4" name="Memory usage" showAreaOutline="true" strokeWidth="1.0" unit="Bytes" unitPrefixes="BINARY" yAxisMaxValue="1.7074527712E9" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0xffc800ff" displayName="Compressed Class Space" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="CompressedClassSpace" path="/Sorted by host/myserver.prod.example.org/Services/JVM/front-server?Memory usage" color="0xffc800ff" legend="Compressed Class Space" prefix="BINARY" graphType="AREA" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/Services/JVM/front-server/Memory usage/Compressed Class Space"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0xff0000ff" displayName="Code Cache" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="Code Cache" path="/Sorted by host/myserver.prod.example.org/Services/JVM/front-server?Memory usage" color="0xff0000ff" legend="Code Cache" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/Services/JVM/front-server/Memory usage/Code Cache"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x000000ff" displayName="Metaspace" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="Metaspace" path="/Sorted by host/myserver.prod.example.org/Services/JVM/front-server?Memory usage" color="0x000000ff" legend="Metaspace" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/Services/JVM/front-server/Memory usage/Metaspace"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x334db3ff" displayName="Old Gen" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="Old Gen" path="/Sorted by host/myserver.prod.example.org/Services/JVM/front-server?Memory usage" color="0x0000ffff" legend="Old Gen" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/Services/JVM/front-server/Memory usage/Old Gen"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x00ffffff" displayName="Survivor Space" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="Survivor Space" path="/Sorted by host/myserver.prod.example.org/Services/JVM/front-server?Memory usage" color="0x00ffffff" legend="Survivor Space" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/Services/JVM/front-server/Memory usage/Survivor Space"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x008000ff" displayName="Eden Space" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="Eden Space" path="/Sorted by host/myserver.prod.example.org/Services/JVM/front-server?Memory usage" color="0x00ff00ff" legend="Eden Space" prefix="BINARY" graphType="STACKED" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/Services/JVM/front-server/Memory usage/Eden Space"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+            </Charts>
+        </Worksheet>
+        <Worksheet chartLayout="STACKED" dividerPosition="0.5667006109979633" fromDateTime="2019-10-01T22:28:52Z[UTC]" name="process" timeRangeLinked="false" timeZone="UTC" toDateTime="2019-10-02T10:28:52Z[UTC]">
+            <Charts>
+                <Chart autoScaleYAxis="true" chartType="LINE" graphOpacity="0.4" name="Block IO" showAreaOutline="true" strokeWidth="1.0" unit="bytes/s" unitPrefixes="BINARY" yAxisMaxValue="5.0550017251555555E7" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0x778899ff" displayName="Number of bytes read" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="read_bytes" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?Block IO" color="0x778899ff" legend="Number of bytes read" prefix="BINARY" graphType="STACKED" unitName="bytes/s" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/Block IO/Number of bytes read"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x4d66ccff" displayName="Number of bytes written" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="write_bytes" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?Block IO" color="0x0000ffff" legend="Number of bytes written" prefix="BINARY" graphType="LINE" unitName="bytes/s" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/Block IO/Number of bytes written"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+                <Chart autoScaleYAxis="true" chartType="STACKED" graphOpacity="0.4" name="CPU Time" showAreaOutline="true" strokeWidth="1.0" unit="s" unitPrefixes="METRIC" yAxisMaxValue="6.465806111111112" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0xffc800ff" displayName="Cumulated user Time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="SuOR+niHC/bNYWBeP0B0Og==" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?CPU Time" color="0xffc800ff" legend="Cumulated user Time" prefix="METRIC" graphType="LINE" unitName="s" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/CPU Time/Cumulated user Time"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0xffff00ff" displayName="Cumulated guest Time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="+2pffG62gJ3bKbwTdCUVJA==" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?CPU Time" color="0xffff00ff" legend="Cumulated guest Time" prefix="METRIC" graphType="LINE" unitName="s" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/CPU Time/Cumulated guest Time"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x00ffffff" displayName="Blocked IO time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="wLBK9CE0FktVVo6JIlRUig==" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?CPU Time" color="0x00ffffff" legend="Blocked IO time" prefix="METRIC" graphType="LINE" unitName="s" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/CPU Time/Blocked IO time"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x808000ff" displayName="Guest Time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="IzJrMUoT9tzdRO0afJYcNA==" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?CPU Time" color="0xff0000ff" legend="Guest Time" prefix="METRIC" graphType="LINE" unitName="s" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/CPU Time/Guest Time"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x008080ff" displayName="Cumulated system Time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="t+PWyjpis/ye3/cZA8AGug==" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?CPU Time" color="0x008080ff" legend="Cumulated system Time" prefix="METRIC" graphType="LINE" unitName="s" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/CPU Time/Cumulated system Time"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0xff0000ff" displayName="System Time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="EQj9pqSkKFg7OnojAxbNQg==" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?CPU Time" color="0x00ff00ff" legend="System Time" prefix="METRIC" graphType="LINE" unitName="s" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/CPU Time/System Time"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x008000ff" displayName="User Time" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="WQqBVfHDkvHE2gC515ZYEw==" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?CPU Time" color="0x0000ffff" legend="User Time" prefix="METRIC" graphType="LINE" unitName="s" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/CPU Time/User Time"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+                <Chart autoScaleYAxis="true" chartType="LINE" graphOpacity="0.4" name="Memory usage" showAreaOutline="true" strokeWidth="1.0" unit="Bytes" unitPrefixes="BINARY" yAxisMaxValue="3.1581874243584E11" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0x4d66ccff" displayName="Average size" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="7dZ58dX/A2ACoqs+iYaY2w==" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?Memory usage" color="0x0000ffff" legend="Average size" prefix="BINARY" graphType="LINE" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/Memory usage/Average size"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x00ffffff" displayName="Average data" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="Y1rE72s7+BJJ74KrEwFaqA==" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?Memory usage" color="0x00ffffff" legend="Average data" prefix="BINARY" graphType="LINE" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/Memory usage/Average data"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x00ff00ff" displayName="Average resident" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="UQjhEDH4E7V06Vav/MgHgA==" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?Memory usage" color="0x00ff00ff" legend="Average resident" prefix="BINARY" graphType="LINE" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/Memory usage/Average resident"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0xff0000ff" displayName="Average shared" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="x1ZvIAlnhmL/1jMgBZOCzQ==" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?Memory usage" color="0xff0000ff" legend="Average shared" prefix="BINARY" graphType="LINE" unitName="Bytes" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/Memory usage/Average shared"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+                <Chart autoScaleYAxis="true" chartType="STACKED" graphOpacity="0.4" name="VM faults" showAreaOutline="true" strokeWidth="1.0" unit="faults/s" unitPrefixes="METRIC" yAxisMaxValue="2000.7759444444446" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0xff0000ff" displayName="Cumulated major faults" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="cmaj_flt" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?VM faults" color="0x00ff00ff" legend="Cumulated major faults" prefix="METRIC" graphType="LINE" unitName="faults/s" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/VM faults/Cumulated major faults"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0x4d66ccff" displayName="Major faults" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="maj_flt" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?VM faults" color="0x0000ffff" legend="Major faults" prefix="METRIC" graphType="LINE" unitName="faults/s" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/VM faults/Major faults"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+                <Chart autoScaleYAxis="true" chartType="LINE" graphOpacity="0.4" name="Threads count" showAreaOutline="true" strokeWidth="1.0" unit="Threads" unitPrefixes="METRIC" yAxisMaxValue="324.76666666666665" yAxisMinValue="0.0">
+                    <SeriesList>
+                        <Timeseries displayColor="0xff0000ff" displayName="Number of process" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="count" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?Threads count" color="0x00ff00ff" legend="Number of process" prefix="METRIC" graphType="LINE" unitName="Threads" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/Threads count/Number of process"/>
+                        </Timeseries>
+                        <Timeseries displayColor="0xe6994dff" displayName="Number of threads" selected="true">
+                            <Binding sourceId="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" label="num_threads" path="/Sorted by host/myserver.prod.example.org/System/Processus/backend-server?Threads count" color="0x0000ffff" legend="Number of threads" prefix="METRIC" graphType="LINE" unitName="Threads" treeHierarchy="/[Demo]/myserver.prod.example.org/System/Processus/backend-server/Threads count/Number of threads"/>
+                        </Timeseries>
+                    </SeriesList>
+                </Chart>
+            </Charts>
+        </Worksheet>
+    </Worksheets>
+</Workspace>
