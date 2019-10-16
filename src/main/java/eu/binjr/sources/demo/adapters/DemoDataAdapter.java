@@ -62,6 +62,7 @@ import java.util.jar.JarFile;
  */
 public class DemoDataAdapter extends BaseDataAdapter {
     private static final Logger logger = LogManager.getLogger(DemoDataAdapter.class);
+    public static final String JRDS_IMAGE_PATH = "/eu/binjr/demo/data/demoJrdsImg/";
     private Path archivePath;
     private JrdsDiskImage jrdsImage;
     private PropertiesManager propertiesManager;
@@ -77,44 +78,19 @@ public class DemoDataAdapter extends BaseDataAdapter {
         super();
         try {
             final URI jarFileUri = getClass().getProtectionDomain().getCodeSource().getLocation().toURI();
-            this.archivePath = FileSystems.newFileSystem(Path.of(jarFileUri), null).getPath("/eu/binjr/demo/data/demoJrdsImg/");
-        } catch (IOException | URISyntaxException e) {
-            throw new DataAdapterException("Cannot open jrds image: " + e.getMessage(), e);
+            if (jarFileUri.toString().endsWith(".jar")) {
+                this.archivePath = FileSystems.newFileSystem(Path.of(jarFileUri), null).getPath(JRDS_IMAGE_PATH);
+            } else {
+                this.archivePath = Path.of(getClass().getResource(JRDS_IMAGE_PATH).toURI());
+            }
+        } catch (IOException e) {
+            throw new DataAdapterException("An error occurred while creating path for jrds image: " + e.getMessage(), e);
         } catch (FileSystemNotFoundException e) {
-            throw new DataAdapterException("Cannot open jrds image: " + e.getMessage(), e);
-            //this.archivePath = getClass().getResource("/eu/binjr)
+            throw new DataAdapterException("Cannot find jrds image in JAR: " + e.getMessage(), e);
+        } catch (URISyntaxException e) {
+            throw new DataAdapterException("Invalid URI for jrds image: " + e.getMessage(), e);
         }
-        //   this.archivePath = Path.of("C:\\Users\\ftt2\\sources\\fthevenet\\binjr-adapter-demo\\data\\demoJrdsImg\\demoJrdsImg.zip");
     }
-
-    /**
-     * Initializes a new instance of the {@link DemoDataAdapter} class from the provided {@link Path}
-     *
-     * @param archivePath the {@link Path} from which to load the archive.
-     * @throws DataAdapterException if an error occurs while loading the archive.
-     */
-    public DemoDataAdapter(Path archivePath) throws DataAdapterException {
-        super();
-    }
-//        this.
-////        try {
-////            URI archiveUri =
-////            this.archivePath = Path.of(archiveUri);
-////        } catch (URISyntaxException e) {
-////            throw new DataAdapterException("Cannot open jrds image: " + e.getMessage(), e);
-////        } catch (FileSystemNotFoundException e) {
-////            try {
-////                URI uri = getClass().getProtectionDomain().getCodeSource().getLocation().toURI();
-////                this.archivePath = FileSystems.newFileSystem(Path.of(uri), null).getPath("/eu/binjr/demo/data/demoJrdsImg.zip");
-////            } catch (IOException | URISyntaxException ex) {
-////                throw new DataAdapterException("Cannot open jrds image: " + e.getMessage(), e);
-////            }
-////        }
-////        Map<String, String> params = new HashMap<>();
-////        params.put("archivePath", this.archivePath.toString());
-////
-////        loadParams(params);
-//    }
 
     @Override
     public Map<String, String> getParams() {
