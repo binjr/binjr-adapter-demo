@@ -18,9 +18,9 @@ A plugin for binjr that provides data sources for demonstration purposes.
 
    Please ensure that the `binjr-adapter-demo-1.x.x.jar` file is present in binjr's `plugins` folder and that is has been 
    properly loaded.  
-   * From the settings panel, expend the `Data Adapter` section and check that the "Demo Data Adpater" is listed in 
+   - From the settings panel, expend the `Data Adapter` section and check that the "Demo Data Adpater" is listed in 
    the Available Data Adpaters table.  
-   * Consult the application's logs (located in `$TMPDIR/binjr` or  `%TEMP%\binjr`, or accessible via the debug console 
+   - Consult the application's logs (located in `TMPDIR/binjr` or  `%TEMP%\binjr`, or accessible via the debug console 
    by pressing `F12`) to see why the plugin failed to load.
    
 * _"When I drop some tree nodes from the demo data source onto a new worksheet, I can see charts being created
