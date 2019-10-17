@@ -14,7 +14,7 @@
   ~    limitations under the License.
   -->
 
-<host name="myserver.prod.example.org" >
+<host name="Demo data, captured 2019-07-02 to 2019-10-07" >
 
   <connection name="jmx-front-server" type="jrds.probe.JMXConnection">
     <attr name="port">10065</attr>

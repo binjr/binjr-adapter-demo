@@ -16,7 +16,7 @@ A plugin for binjr that provides data sources for demonstration purposes.
 
 
 ## Troubleshooting
-* _"I get a `Could not find a registered adapter for key eu.binjr.sources.demo.adapters.DemoDataAdapter` error message when trying to open the demo.bjr workspace._  
+* _"I get a `Could not find a registered adapter for key eu.binjr.sources.demo.adapters.DemoDataAdapter` error message when trying to open the demo.bjr workspace."_  
 
    Please ensure that the `binjr-adapter-demo-1.x.x.jar` file is present in binjr's `plugins` folder and that is has been 
    properly loaded.  
@@ -26,7 +26,7 @@ A plugin for binjr that provides data sources for demonstration purposes.
    by pressing `F12`) to see why the plugin failed to load.
    
 * _"When I drop some tree nodes from the demo data source onto a new worksheet, I can see charts being created
- but all I see are flatlines ._  
+ but all I see are flatlines."_  
 
    Please make sure the time interval defined for that new worksheet includes or intersects with a period going from the
     **3rd of July to the 7th of October 2019**, which is the period over which the data for the demo was recorded.  
