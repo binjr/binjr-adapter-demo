@@ -132,7 +132,7 @@ task shaded(type: Jar) {
 }
 
 task copyPluginLibs(type: Copy, dependsOn: shaded) {
-    into "$DISTRIBUTION_PATH/plugins"
+    into "$DISTRIBUTION_PATH"
     from project.shaded
 }
 

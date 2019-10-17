@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Workspace dividerPosition="0.18475935828877005" schemaVersion="2.2.0" producerInfo="binjr v2.10.0-SNAPSHOT (build #000)">
+<Workspace dividerPosition="0.18459302325581395" schemaVersion="2.2.0" producerInfo="binjr v2.10.0-SNAPSHOT (build #000)">
     <Sources>
         <Source adapter="eu.binjr.sources.demo.adapters.DemoDataAdapter" id="d1d4d97d-33ce-43c7-8c2b-bb4dee892929" name="[Demo]">
             <AdapterParameters/>
         </Source>
     </Sources>
     <Worksheets>
-        <Worksheet chartLayout="STACKED" dividerPosition="0.6960285132382892" fromDateTime="2019-10-01T22:28:52Z[UTC]" name="CPU usage &amp; Memory" timeRangeLinked="false" timeZone="UTC" toDateTime="2019-10-02T10:28:52Z[UTC]">
+        <Worksheet chartLayout="STACKED" dividerPosition="0.6959390862944163" fromDateTime="2019-10-01T22:28:52Z[UTC]" name="CPU usage &amp; Memory" timeRangeLinked="false" timeZone="UTC" toDateTime="2019-10-02T10:28:52Z[UTC]">
             <Charts>
                 <Chart autoScaleYAxis="true" chartType="STACKED" graphOpacity="0.4" name="CPU usage" showAreaOutline="true" strokeWidth="1.0" unit="%" unitPrefixes="METRIC" yAxisMaxValue="110.00000000000003" yAxisMinValue="0.0">
                     <SeriesList>
@@ -94,7 +94,7 @@
                 </Chart>
             </Charts>
         </Worksheet>
-        <Worksheet chartLayout="STACKED" dividerPosition="0.6960285132382892" fromDateTime="2019-10-01T22:28:52Z[UTC]" name="Disk" timeRangeLinked="false" timeZone="UTC" toDateTime="2019-10-02T10:28:52Z[UTC]">
+        <Worksheet chartLayout="STACKED" dividerPosition="0.6959390862944163" fromDateTime="2019-10-01T22:28:52Z[UTC]" name="Disk" timeRangeLinked="false" timeZone="UTC" toDateTime="2019-10-02T10:28:52Z[UTC]">
             <Charts>
                 <Chart autoScaleYAxis="true" chartType="LINE" graphOpacity="0.4" name="Activity as bytes/s" showAreaOutline="true" strokeWidth="1.0" unit="bytes/s" unitPrefixes="BINARY" yAxisMaxValue="1.0053030951822221E8" yAxisMinValue="0.0">
                     <SeriesList>
@@ -142,7 +142,7 @@
                 </Chart>
             </Charts>
         </Worksheet>
-        <Worksheet chartLayout="STACKED" dividerPosition="0.6960285132382892" fromDateTime="2019-10-01T22:28:52Z[UTC]" name="JVM" timeRangeLinked="false" timeZone="UTC" toDateTime="2019-10-02T10:28:52Z[UTC]">
+        <Worksheet chartLayout="STACKED" dividerPosition="0.6959390862944163" fromDateTime="2019-10-01T22:28:52Z[UTC]" name="JVM" timeRangeLinked="false" timeZone="UTC" toDateTime="2019-10-02T10:28:52Z[UTC]">
             <Charts>
                 <Chart autoScaleYAxis="true" chartType="STACKED" graphOpacity="0.4" name="GC Count" showAreaOutline="true" strokeWidth="1.0" unit="Collections/s" unitPrefixes="METRIC" yAxisMaxValue="9.45614035087719" yAxisMinValue="0.0">
                     <SeriesList>
@@ -188,7 +188,7 @@
                 </Chart>
             </Charts>
         </Worksheet>
-        <Worksheet chartLayout="STACKED" dividerPosition="0.5667006109979633" fromDateTime="2019-10-01T22:28:52Z[UTC]" name="process" timeRangeLinked="false" timeZone="UTC" toDateTime="2019-10-02T10:28:52Z[UTC]">
+        <Worksheet chartLayout="STACKED" dividerPosition="0.7243654822335025" fromDateTime="2019-10-01T22:28:52Z[UTC]" name="process" timeRangeLinked="false" timeZone="UTC" toDateTime="2019-10-02T10:28:52Z[UTC]">
             <Charts>
                 <Chart autoScaleYAxis="true" chartType="LINE" graphOpacity="0.4" name="Block IO" showAreaOutline="true" strokeWidth="1.0" unit="bytes/s" unitPrefixes="BINARY" yAxisMaxValue="5.0550017251555555E7" yAxisMinValue="0.0">
                     <SeriesList>
