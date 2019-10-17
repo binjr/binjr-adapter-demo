@@ -8,7 +8,7 @@ A plugin for binjr that provides data sources for demonstration purposes.
 ## Trying it out
 1. Make sure [binjr](https://binjr.eu) is installed on your system (visit https://binjr.eu to get the latest release) 
    and make a note of the folder it is installed in.
-2. Download the `binjr-adapter-demo-1.x.x.zip` archive.
+2. Download the `binjr-adapter-demo-1.x.x.zip` archive from [the releases page](https://github.com/binjr/binjr-adapter-demo/releases).
 3. Copy the `binjr-adapter-demo-1.x.x.jar` file contained in the zip file into the `plugins` folder of your 
    [binjr](https://binjr.eu) installation.
 4. Start [binjr](https://binjr.eu) (or restart it if it was runnning when you copied the plugin) and open the `demo.bjr`
