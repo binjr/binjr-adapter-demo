@@ -106,6 +106,7 @@ public class DemoDataAdapter extends BaseDataAdapter {
         this.hostsList = new HostsList();
         this.hostsList.setProbeClassResolver(new ReadOnlyProbeClassResolver(propertiesManager.extensionClassLoader))
                 .configure(propertiesManager);
+
         var tree = new FilterableTreeItem<>(
                 new TimeSeriesBinding(
                         "",
@@ -120,6 +121,20 @@ public class DemoDataAdapter extends BaseDataAdapter {
             attachNode(tree, child, child.getChildsMap());
         }
         return tree;
+    }
+
+   // @Override
+    public ZonedDateTime latestTimestamp(String path, List<TimeSeriesInfo> seriesInfos) throws DataAdapterException {
+        ZonedDateTime latest = ZonedDateTime.now();
+        int sepPos = path.indexOf("?");
+        if (sepPos >= 0) {
+            String graphTreePath = path.substring(0, sepPos);
+            String graphNodeKey = path.substring(sepPos + 1);
+            var graphTree = hostsList.getGraphTreeByHost().getById(graphTreePath.hashCode());
+            var graphNode = graphTree.getGraphsSet().get(graphNodeKey);
+            latest = ZonedDateTime.ofInstant(graphNode.getProbe().getLastUpdate().toInstant(), getTimeZoneId());
+        }
+        return latest;
     }
 
     @Override

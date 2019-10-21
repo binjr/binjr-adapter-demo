@@ -1,1 +1,1 @@
-Initial release
+* _[New]_ New worksheets' time range are now automatically set to the last 24 hours from the last captured sample.
