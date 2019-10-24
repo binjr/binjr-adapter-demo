@@ -16,6 +16,7 @@
 
 package eu.binjr.sources.demo.adapters;
 
+import eu.binjr.common.javafx.controls.TimeRange;
 import eu.binjr.core.data.adapters.BaseDataAdapter;
 import eu.binjr.core.data.adapters.TimeSeriesBinding;
 import eu.binjr.core.data.exceptions.DataAdapterException;
@@ -123,8 +124,8 @@ public class DemoDataAdapter extends BaseDataAdapter {
         return tree;
     }
 
-   // @Override
-    public ZonedDateTime latestTimestamp(String path, List<TimeSeriesInfo> seriesInfos) throws DataAdapterException {
+    @Override
+    public TimeRange getInitialTimeRange(String path, List<TimeSeriesInfo> seriesInfos) throws DataAdapterException {
         ZonedDateTime latest = ZonedDateTime.now();
         int sepPos = path.indexOf("?");
         if (sepPos >= 0) {
@@ -134,7 +135,7 @@ public class DemoDataAdapter extends BaseDataAdapter {
             var graphNode = graphTree.getGraphsSet().get(graphNodeKey);
             latest = ZonedDateTime.ofInstant(graphNode.getProbe().getLastUpdate().toInstant(), getTimeZoneId());
         }
-        return latest;
+        return TimeRange.of(latest.minusHours(24), latest);
     }
 
     @Override
