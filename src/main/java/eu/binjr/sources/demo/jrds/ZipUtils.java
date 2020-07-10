@@ -1,5 +1,5 @@
 /*
- *    Copyright 2019 Frederic Thevenet
+ *    Copyright 2020 Frederic Thevenet
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,12 +37,13 @@ public class ZipUtils {
     private static final Logger logger = LogManager.getLogger(ZipUtils.class);
     private static final int MAX_BLOCKING_QUEUE_CAPACITY = 100000;
 
-    public static Path unzip(Path zipFilePath, Predicate<String> filter, Path outputDirectory, int nbThreads) throws IOException {
+    public static Path unzip(Path zipFilePath, Predicate<String> filter, Path outputDirectory, int nbThreads) throws Exception {
         return unzip(zipFilePath, filter, outputDirectory, false, nbThreads);
     }
 
-    public static Path unzip(Path zipFilePath, Predicate<String> filter, Path outputDirectory, boolean deleteOnExit, int nbThreads) throws IOException {
+    public static Path unzip(Path zipFilePath, Predicate<String> filter, Path outputDirectory, boolean deleteOnExit, int nbThreads) throws Exception {
         final AtomicBoolean taskDone = new AtomicBoolean(false);
+        final AtomicBoolean taskAborted = new AtomicBoolean(false);
         AtomicLong nbFiles = new AtomicLong(0);
         try (Profiler p = Profiler.start(e -> logger.trace("Unzipped " + nbFiles.get() + " files from  " + zipFilePath + " in parallel on " + nbThreads + " threads: " + e.toMilliString()))) {
             try (ZipFile zipFile = new ZipFile(zipFilePath.toFile())) {
@@ -61,28 +62,34 @@ public class ZipUtils {
                         do {
                             List<ZipEntry> todo = new ArrayList<>();
                             queue.drainTo(todo, 8);
-                            for (ZipEntry zipEntry : todo) {
-                                File file = new File(outputDirectory + File.separator + zipEntry.getName());
-                               if (deleteOnExit){
-                                   file.deleteOnExit();
-                               }
-                                new File(file.getParent()).mkdirs();
-                                try (FileOutputStream fileStream = new FileOutputStream(file)) {
-                                    copyStream(zipFile.getInputStream(zipEntry), fileStream);
+                            try {
+                                for (ZipEntry zipEntry : todo) {
+                                    File file = new File(outputDirectory + File.separator + zipEntry.getName());
+                                    if (deleteOnExit) {
+                                        file.deleteOnExit();
+                                    }
+                                    new File(file.getParent()).mkdirs();
+                                    try (FileOutputStream fileStream = new FileOutputStream(file)) {
+                                        copyStream(zipFile.getInputStream(zipEntry), fileStream);
+                                    }
+                                    nbFileUnzipped++;
                                 }
-                                nbFileUnzipped++;
+                            } catch (Throwable t) {
+                                // Signal that worker thread was aborted and rethrow
+                                taskAborted.set(true);
+                                throw t;
                             }
-                        } while (!taskDone.get() && !Thread.currentThread().isInterrupted());
+                        } while (!taskDone.get() && !taskAborted.get() && !Thread.currentThread().isInterrupted());
                         return nbFileUnzipped;
                     }));
                 }
-                while (entries.hasMoreElements()) {
+                while (!taskAborted.get() && entries.hasMoreElements()) {
                     final ZipEntry zipEntry = entries.nextElement();
                     if (!zipEntry.isDirectory() && filter.test(zipEntry.getName())) {
                         queue.offer(zipEntry);
                     }
                 }
-                while (queue.size() > 0) {
+                while (!taskAborted.get() && queue.size() > 0) {
                     try {
                         Thread.sleep(200);
                     } catch (InterruptedException e) {
@@ -96,15 +103,18 @@ public class ZipUtils {
                 } catch (InterruptedException e) {
                     logger.error("Termination interrupted", e);
                 }
-                results.forEach(f -> {
+                for (Future<Integer> f : results) {
                     //signal exceptions that may have happened on thread pool
                     try {
                         logger.trace("Thread unzipped " + f.get() + " files");
                         nbFiles.addAndGet(f.get());
-                    } catch (InterruptedException | ExecutionException e) {
-                        logger.error("On error occured while unzipping file", e);
+                    } catch (InterruptedException e) {
+                        logger.error("Getting result from worker was interrupted", e);
+                    } catch (ExecutionException e) {
+                        //rethrow execution exceptions
+                        throw e;
                     }
-                });
+                }
             }
         }
         return outputDirectory;

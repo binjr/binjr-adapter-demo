@@ -1,5 +1,5 @@
 /*
- *    Copyright 2019 Frederic Thevenet
+ *    Copyright 2020 Frederic Thevenet
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -113,7 +113,7 @@ public class ReadOnlyProbeClassResolver extends ProbeClassResolver {
         @Override
         public Boolean configure(List<Object> list) {
             if (list != null && !list.isEmpty()) {
-                this.index = list.get(0).toString();
+                this.index = list.get(list.size()-1).toString();
             }
             return true;
         }

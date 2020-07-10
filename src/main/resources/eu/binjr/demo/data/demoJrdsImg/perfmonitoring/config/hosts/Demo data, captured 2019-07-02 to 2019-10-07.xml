@@ -1,5 +1,5 @@
 <!--
-  ~    Copyright 2019 Frederic Thevenet
+  ~    Copyright 2019-2020 Frederic Thevenet
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -15,26 +15,11 @@
   -->
 
 <host name="Demo data, captured 2019-07-02 to 2019-10-07" >
-
-  <connection name="jmx-front-server" type="jrds.probe.JMXConnection">
-    <attr name="port">10065</attr>
-  </connection>
-  <probe connection="jmx-front-server" label="front-server" type="JMXConcMarkSweepGC8"/>
-
-  <connection name="rmi" type="jrds.probe.AgentConnection">
-    <attr name="port">10071</attr>
-  </connection>
-  <probe connection="rmi" timer="systemPoll" type="Meminfo26"/>
-
-  <probe connection="rmi" type="CpuStatsLinux"/>
-  <probe connection="rmi" timer="systemPoll" type="Diskstats">
-       <attr name="index">data</attr>
-  </probe>  
-
-  <probe connection="rmi" timer="systemPoll" type="ProcessInfo26">
+  <probe label="front-server" type="JMXConcMarkSweepGC8"/>
+  <probe timer="systemPoll" type="Meminfo26"/>
+  <probe type="CpuStatsLinux"/>
+  <probe timer="systemPoll" type="ProcessInfo26">
     <attr name="index">backend-server</attr>
     <attr name="pattern">.*id -522258814.*</attr>
   </probe>
-
-
 </host>
