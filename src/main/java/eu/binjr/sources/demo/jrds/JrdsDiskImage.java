@@ -1,5 +1,5 @@
 /*
- *    Copyright 2019 Frederic Thevenet
+ *    Copyright 2019-2020 Frederic Thevenet
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,11 +37,11 @@ public class JrdsDiskImage implements Closeable {
     private Path configdir;
     private Path tempDir;
 
-    public static JrdsDiskImage of(Path path) throws IOException {
+    public static JrdsDiskImage of(Path path) throws Exception {
         return new JrdsDiskImage(path);
     }
 
-    private JrdsDiskImage(Path origin) throws IOException {
+    private JrdsDiskImage(Path origin) throws Exception {
         try {
             this.originPath = origin;
             if (!Files.exists(origin)) {
@@ -121,7 +121,6 @@ public class JrdsDiskImage implements Closeable {
             logger.debug(() -> "Call stack", e);
         }
     }
-
 
     public Path getLibsPath() {
         return libsPath;

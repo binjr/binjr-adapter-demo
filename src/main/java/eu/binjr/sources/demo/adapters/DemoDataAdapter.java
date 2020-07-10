@@ -1,5 +1,5 @@
 /*
- *    Copyright 2019 Frederic Thevenet
+ *    Copyright 2019-2020 Frederic Thevenet
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,16 +18,14 @@ package eu.binjr.sources.demo.adapters;
 
 import eu.binjr.common.javafx.controls.TimeRange;
 import eu.binjr.core.data.adapters.BaseDataAdapter;
-import eu.binjr.core.data.adapters.TimeSeriesBinding;
+import eu.binjr.core.data.adapters.SourceBinding;
 import eu.binjr.core.data.exceptions.DataAdapterException;
 import eu.binjr.core.data.timeseries.DoubleTimeSeriesProcessor;
 import eu.binjr.core.data.timeseries.TimeSeriesProcessor;
-import eu.binjr.core.data.workspace.ChartType;
 import eu.binjr.core.data.workspace.TimeSeriesInfo;
-import eu.binjr.core.data.workspace.UnitPrefixes;
+import eu.binjr.sources.demo.jrds.JrdsBindingBuilder;
 import eu.binjr.sources.demo.jrds.JrdsDiskImage;
 import eu.binjr.sources.demo.jrds.ReadOnlyProbeClassResolver;
-import eu.binjr.sources.demo.jrds.SeriesBindings;
 import javafx.scene.chart.XYChart;
 import jrds.GraphDesc;
 import jrds.GraphTree;
@@ -39,6 +37,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.fx.ui.controls.tree.FilterableTreeItem;
 import org.rrd4j.ConsolFun;
+import org.rrd4j.core.RrdDb;
 import org.rrd4j.data.DataProcessor;
 
 import java.io.FileReader;
@@ -62,8 +61,8 @@ import java.util.jar.JarFile;
  * @author Frederic Thevenet
  */
 public class DemoDataAdapter extends BaseDataAdapter {
-    private static final Logger logger = LogManager.getLogger(DemoDataAdapter.class);
     public static final String JRDS_IMAGE_PATH = "/eu/binjr/demo/data/demoJrdsImg/";
+    private static final Logger logger = LogManager.getLogger(DemoDataAdapter.class);
     private Path archivePath;
     private JrdsDiskImage jrdsImage;
     private PropertiesManager propertiesManager;
@@ -80,7 +79,7 @@ public class DemoDataAdapter extends BaseDataAdapter {
         try {
             final URI jarFileUri = getClass().getProtectionDomain().getCodeSource().getLocation().toURI();
             if (jarFileUri.toString().endsWith(".jar")) {
-                this.archivePath = FileSystems.newFileSystem(Path.of(jarFileUri), null).getPath(JRDS_IMAGE_PATH);
+                this.archivePath = FileSystems.newFileSystem(Path.of(jarFileUri), (ClassLoader)null).getPath(JRDS_IMAGE_PATH);
             } else {
                 this.archivePath = Path.of(getClass().getResource(JRDS_IMAGE_PATH).toURI());
             }
@@ -103,21 +102,16 @@ public class DemoDataAdapter extends BaseDataAdapter {
     }
 
     @Override
-    public FilterableTreeItem<TimeSeriesBinding> getBindingTree() throws DataAdapterException {
+    public FilterableTreeItem<SourceBinding> getBindingTree() throws DataAdapterException {
         this.hostsList = new HostsList();
-        this.hostsList.setProbeClassResolver(new ReadOnlyProbeClassResolver(propertiesManager.extensionClassLoader))
-                .configure(propertiesManager);
+        this.hostsList.setProbeClassResolverSource(ReadOnlyProbeClassResolver::new).configure(propertiesManager);
 
-        var tree = new FilterableTreeItem<>(
-                new TimeSeriesBinding(
-                        "",
-                        "/",
-                        null,
-                        getSourceName(),
-                        UnitPrefixes.METRIC,
-                        ChartType.STACKED,
-                        "-",
-                        "/" + getSourceName(), this));
+        var tree = new FilterableTreeItem<SourceBinding>(
+                new JrdsBindingBuilder()
+                        .withLabel(getSourceName())
+                        .withPath("/")
+                        .withAdapter(this)
+                        .build());
         for (GraphTree child : hostsList.getGraphTreeByHost().getChildsMap().values()) {
             attachNode(tree, child, child.getChildsMap());
         }
@@ -153,13 +147,16 @@ public class DemoDataAdapter extends BaseDataAdapter {
             var graphNode = graphTree.getGraphsSet().get(graphNodeKey);
             ExtractInfo ei = ExtractInfo.get().make(ConsolFun.AVERAGE).make(Date.from(start), Date.from(end));
             try (Extractor ex = graphNode.getProbe().fetchData()) {
+                RrdDb rrd = (RrdDb) graphNode.getProbe().getMainStore().getStoreObject();
                 DataProcessor dp = ei.getDataProcessor();
                 for (GraphDesc.DsDesc ds : graphNode.getGraphDesc().getGraphElements()) {
                     if (ds.graphType != GraphDesc.GraphType.COMMENT && ds.graphType != GraphDesc.GraphType.LEGEND) {
                         if (ds.rpn != null) {
                             dp.addDatasource(ds.name, ds.rpn);
                         } else if (ds.dsName != null) {
-                            ex.addSource(ds.name, ds.dsName);
+                            if (isDsPresent(rrd, ds.dsName)) {
+                                ex.addSource(ds.name, ds.dsName);
+                            }
                         }
                     }
                 }
@@ -246,43 +243,68 @@ public class DemoDataAdapter extends BaseDataAdapter {
         super.close();
     }
 
-    private void attachNode(FilterableTreeItem<TimeSeriesBinding> tree, GraphTree
+    private void attachNode(FilterableTreeItem<SourceBinding> tree, GraphTree
             node, Map<String, GraphTree> nodes) {
         String currentPath = node.getPath();
-        FilterableTreeItem<TimeSeriesBinding> branch = new FilterableTreeItem<>(
-                SeriesBindings.of(
-                        tree.getValue().getTreeHierarchy(),
-                        node.getName(),
-                        currentPath,
-                        this));
+        FilterableTreeItem<SourceBinding> branch = new FilterableTreeItem<>(
+                new JrdsBindingBuilder()
+                        .withLabel(node.getName())
+                        .withPath(currentPath)
+                        .withParent(tree.getValue())
+                        .withAdapter(this)
+                        .build());
         for (var child : node.getChildsMap().values()) {
             attachNode(branch, child, nodes);
         }
         if (node.getGraphsSet() != null) {
             for (var gn : node.getGraphsSet().entrySet()) {
-                var leaf = new FilterableTreeItem<>(
-                        SeriesBindings.of(
-                                branch.getValue().getTreeHierarchy(),
-                                gn.getKey(),
-                                gn.getValue().getGraphDesc(),
-                                currentPath + "?" + gn.getKey(),
-                                this));
+                RrdDb rrd = null;
+                try {
+                    rrd = (RrdDb) gn.getValue().getProbe().getMainStore().getStoreObject();
+                } catch (Exception e) {
+                    logger.error("Error accessing RRD data store: " + e.getMessage());
+                    logger.debug("Call stack", e);
+                    continue;
+                }
+                logger.trace(() -> "Graph desc=" + gn.getValue().getGraphDesc());
+                FilterableTreeItem<SourceBinding> leaf = new FilterableTreeItem<>(
+                        new JrdsBindingBuilder()
+                                .withGraphDesc(gn.getValue().getGraphDesc())
+                                .withParent(branch.getValue())
+                                .withPath(currentPath + "?" + gn.getKey())
+                                .withAdapter(this)
+                                .withLabel(gn.getKey())
+                                .build());
                 branch.getInternalChildren().add(leaf);
                 for (var ds : gn.getValue().getGraphDesc().getGraphElements()) {
                     if (ds.graphType != GraphDesc.GraphType.COMMENT &&
                             ds.graphType != GraphDesc.GraphType.NONE &&
-                            ds.legend != null) {
+                            ds.legend != null && isDsPresent(rrd, ds.dsName)) {
                         leaf.getInternalChildren().add(new FilterableTreeItem<>(
-                                SeriesBindings.of(
-                                        leaf.getValue().getTreeHierarchy(),
-                                        gn.getValue().getGraphDesc(),
-                                        ds,
-                                        currentPath + "?" + gn.getKey(),
-                                        this)));
+                                new JrdsBindingBuilder()
+                                        .withGraphDesc(gn.getValue().getGraphDesc(), ds)
+                                        .withParent(leaf.getValue())
+                                        .withPath(currentPath + "?" + gn.getKey())
+                                        .withAdapter(this)
+                                        .build()));
                     }
                 }
             }
         }
         tree.getInternalChildren().add(branch);
+    }
+
+    private boolean isDsPresent(RrdDb rrd, String dsName) {
+        try {
+            if (dsName != null && rrd != null && !rrd.containsDs(dsName)) {
+                logger.warn("DataSource " + dsName + " doesn't exists in RRD");
+                return false;
+            }
+        } catch (IOException e) {
+            logger.error("Error validating DataSource " + dsName + " : " + e.getMessage());
+            logger.debug("Call stack", e);
+            return false;
+        }
+        return true;
     }
 }

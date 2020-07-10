@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat
 plugins {
     id 'java'
     id 'application'
-    id "io.freefair.lombok" version "4.1.2"
+    id "io.freefair.lombok" version "5.1.0"
     id "org.kordamp.markdown.convert" version "1.2.0"
     id "signing"
 }
@@ -57,23 +57,23 @@ description 'binjr demo adapter'
 compileJava.options.encoding = 'UTF-8'
 
 dependencies {
-    implementation 'eu.binjr:binjr-core:2.10.0'
+    implementation 'eu.binjr:binjr-core:3.0.0-SNAPSHOT'
     implementation "org.openjfx:javafx-base:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
     implementation "org.openjfx:javafx-graphics:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
     implementation "org.openjfx:javafx-controls:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
     implementation "org.openjfx:javafx-fxml:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
     implementation "org.openjfx:javafx-swing:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
 
-    compile("org.apache.logging.log4j:log4j-slf4j-impl:2.12.1") {
+    compile("org.apache.logging.log4j:log4j-slf4j-impl:2.13.3") {
         exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
         exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
     }
 
-    compile("org.apache.logging.log4j:log4j-1.2-api:2.12.1") {
+    compile("org.apache.logging.log4j:log4j-1.2-api:2.13.3") {
         exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
         exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
     }
-    compile('fr.jrds:jrdsagent:1.0-RC1') {
+    compile('fr.jrds:jrdsagent:2020.1') {
         exclude group: 'mysql', module: 'mysql-connector-java'
         exclude group: 'postgresql', module: 'postgresql'
         exclude group: 'org.jolokia', module: '*'
@@ -83,7 +83,7 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
-    compile('fr.jrds:jrds-core:1.0-RC1') {
+    compile('fr.jrds:jrds-core:2020.1') {
         exclude group: 'mysql', module: 'mysql-connector-java'
         exclude group: 'postgresql', module: 'postgresql'
         exclude group: 'org.jolokia', module: '*'
@@ -93,7 +93,7 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
-    compile('fr.jrds:jrds-core:1.0-RC1:webapp') {
+    compile('fr.jrds:jrds-core:2020.1:webapp') {
         exclude group: 'mysql', module: 'mysql-connector-java'
         exclude group: 'postgresql', module: 'postgresql'
         exclude group: 'org.jolokia', module: '*'

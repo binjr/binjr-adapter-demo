@@ -1,6 +1,6 @@
 
 /*
- *    Copyright 2019 Frederic Thevenet
+ *    Copyright 2019-2020 Frederic Thevenet
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 package eu.binjr.sources.demo.adapters;
 
 
+import eu.binjr.common.version.Version;
 import eu.binjr.core.data.adapters.BaseDataAdapterInfo;
 
 
@@ -34,9 +35,12 @@ public class DemoDataAdapterInfo extends BaseDataAdapterInfo {
     public DemoDataAdapterInfo() {
         super("Demo",
                 "Demo Data Adapter",
-                "Copyright © 2019 Frederic Thevenet",
+                "Copyright © 2019-2020 Frederic Thevenet",
                 "Apache-2.0",
                 "https://github.com/binjr/binjr-adapter-demo",
-                DemoDataAdapter.class);
+                DemoDataAdapter.class,
+                null,
+                null,
+                Version.parseVersion("3.0.0"));
     }
 }
