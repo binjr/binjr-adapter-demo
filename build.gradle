@@ -4,7 +4,7 @@ import org.gradle.api.internal.file.copy.CopyActionProcessingStream
 import java.text.SimpleDateFormat
 
 /*
- *    Copyright 2019 Frederic Thevenet
+ *    Copyright 2019-2020 Frederic Thevenet
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -37,12 +37,14 @@ ext.IS_64 = OS_ARCH.toLowerCase().contains("64")
 ext.IS_MAC = OS_NAME.contains("mac") || OS_NAME.contains("darwin")
 ext.IS_WINDOWS = OS_NAME.contains("windows")
 ext.IS_LINUX = OS_NAME.contains("linux")
-ext.OPENJFX_VERSION = "13.0.1"
+ext.OPENJFX_VERSION = "15.0.1"
 ext.OPENJFX_PLATEFORM_CLASSIFIER = IS_MAC ? 'mac' : IS_WINDOWS ? 'win' : IS_LINUX ? 'linux' : 'unsupported'
 
 ext.DISTRIBUTION_NAME = "${project.name}-${PRODUCT_VERSION}"
 ext.DISTRIBUTION_PATH = "${buildDir}/distributions/${DISTRIBUTION_NAME}"
 ext.DISTRIBUTION_EXTENSION = "zip"
+
+ext.BINJR_VERSION = '3.0.0-b04-SNAPSHOT'
 
 ext."signing.keyId" = System.getenv('GPG_KEY_NAME')
 ext."signing.secretKeyRingFile" = "${projectDir}/distribution/publishing/keyring.gpg"
@@ -57,23 +59,25 @@ description 'binjr demo adapter'
 compileJava.options.encoding = 'UTF-8'
 
 dependencies {
-    implementation 'eu.binjr:binjr-core:3.0.0-SNAPSHOT'
+    implementation "eu.binjr:binjr-core:${BINJR_VERSION}"
     implementation "org.openjfx:javafx-base:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
     implementation "org.openjfx:javafx-graphics:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
     implementation "org.openjfx:javafx-controls:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
     implementation "org.openjfx:javafx-fxml:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
     implementation "org.openjfx:javafx-swing:$OPENJFX_VERSION:$OPENJFX_PLATEFORM_CLASSIFIER"
 
-    compile("org.apache.logging.log4j:log4j-slf4j-impl:2.13.3") {
+    implementation "eu.binjr:binjr-adapter-logs:${BINJR_VERSION}"
+
+    compile("org.apache.logging.log4j:log4j-slf4j-impl:2.14.0") {
         exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
         exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
     }
 
-    compile("org.apache.logging.log4j:log4j-1.2-api:2.13.3") {
+     compile("org.apache.logging.log4j:log4j-1.2-api:2.14.0") {
         exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
         exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
     }
-    compile('fr.jrds:jrdsagent:2020.1') {
+    compile('fr.jrds:jrdsagent:2020.2-SNAPSHOT') {
         exclude group: 'mysql', module: 'mysql-connector-java'
         exclude group: 'postgresql', module: 'postgresql'
         exclude group: 'org.jolokia', module: '*'
@@ -83,7 +87,7 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
-    compile('fr.jrds:jrds-core:2020.1') {
+    compile('fr.jrds:jrds-core:2020.2-SNAPSHOT') {
         exclude group: 'mysql', module: 'mysql-connector-java'
         exclude group: 'postgresql', module: 'postgresql'
         exclude group: 'org.jolokia', module: '*'
@@ -93,7 +97,7 @@ dependencies {
         exclude group: 'org.slf4j', module: 'slf4j-log4j12'
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
-    compile('fr.jrds:jrds-core:2020.1:webapp') {
+    compile('fr.jrds:jrds-core:2020.2-SNAPSHOT:webapp') {
         exclude group: 'mysql', module: 'mysql-connector-java'
         exclude group: 'postgresql', module: 'postgresql'
         exclude group: 'org.jolokia', module: '*'
@@ -236,7 +240,7 @@ class WrapTaskForSigning extends AbstractArchiveTask {
 }
 
 repositories {
-    //mavenLocal()
+    mavenLocal()
     mavenCentral()
     jcenter()
     maven {

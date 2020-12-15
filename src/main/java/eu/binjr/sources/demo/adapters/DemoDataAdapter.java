@@ -18,6 +18,7 @@ package eu.binjr.sources.demo.adapters;
 
 import eu.binjr.common.javafx.controls.TimeRange;
 import eu.binjr.core.data.adapters.BaseDataAdapter;
+import eu.binjr.core.data.adapters.DataAdapterInfo;
 import eu.binjr.core.data.adapters.SourceBinding;
 import eu.binjr.core.data.exceptions.DataAdapterException;
 import eu.binjr.core.data.timeseries.DoubleTimeSeriesProcessor;
@@ -60,7 +61,7 @@ import java.util.jar.JarFile;
  *
  * @author Frederic Thevenet
  */
-public class DemoDataAdapter extends BaseDataAdapter {
+public class DemoDataAdapter extends BaseDataAdapter<Double> {
     public static final String JRDS_IMAGE_PATH = "/eu/binjr/demo/data/demoJrdsImg/";
     private static final Logger logger = LogManager.getLogger(DemoDataAdapter.class);
     private Path archivePath;
@@ -118,8 +119,9 @@ public class DemoDataAdapter extends BaseDataAdapter {
         return tree;
     }
 
+
     @Override
-    public TimeRange getInitialTimeRange(String path, List<TimeSeriesInfo> seriesInfos) throws DataAdapterException {
+    public TimeRange getInitialTimeRange(String path, List<TimeSeriesInfo<Double>> seriesInfo) throws DataAdapterException {
         ZonedDateTime latest = ZonedDateTime.now();
         int sepPos = path.indexOf("?");
         if (sepPos >= 0) {
@@ -132,47 +134,53 @@ public class DemoDataAdapter extends BaseDataAdapter {
         return TimeRange.of(latest.minusHours(24), latest);
     }
 
+
     @Override
-    public Map<TimeSeriesInfo, TimeSeriesProcessor> fetchData(String path,
-                                                              Instant start,
-                                                              Instant end,
-                                                              List<TimeSeriesInfo> seriesInfos,
-                                                              boolean bypassCache) throws DataAdapterException {
+    public Map<TimeSeriesInfo<Double> ,TimeSeriesProcessor<Double>> fetchData(String path,
+                                                                              Instant start,
+                                                                              Instant end,
+                                                                              List<TimeSeriesInfo<Double>> seriesInfos,
+                                                                              boolean bypassCache) throws DataAdapterException {
         int sepPos = path.indexOf("?");
-        Map<TimeSeriesInfo, TimeSeriesProcessor> result = new HashMap<>();
+        Map<TimeSeriesInfo<Double>, TimeSeriesProcessor<Double>> result = new HashMap<>();
         if (sepPos >= 0) {
             String graphTreePath = path.substring(0, sepPos);
             String graphNodeKey = path.substring(sepPos + 1);
             var graphTree = hostsList.getGraphTreeByHost().getById(graphTreePath.hashCode());
             var graphNode = graphTree.getGraphsSet().get(graphNodeKey);
-            ExtractInfo ei = ExtractInfo.get().make(ConsolFun.AVERAGE).make(Date.from(start), Date.from(end));
+            ExtractInfo ei = ExtractInfo.builder()
+                    .cf(ConsolFun.AVERAGE)
+                    .start(start)
+                    .end(end)
+                    .build();
             try (Extractor ex = graphNode.getProbe().fetchData()) {
-                RrdDb rrd = (RrdDb) graphNode.getProbe().getMainStore().getStoreObject();
-                DataProcessor dp = ei.getDataProcessor();
-                for (GraphDesc.DsDesc ds : graphNode.getGraphDesc().getGraphElements()) {
-                    if (ds.graphType != GraphDesc.GraphType.COMMENT && ds.graphType != GraphDesc.GraphType.LEGEND) {
-                        if (ds.rpn != null) {
-                            dp.addDatasource(ds.name, ds.rpn);
-                        } else if (ds.dsName != null) {
-                            if (isDsPresent(rrd, ds.dsName)) {
-                                ex.addSource(ds.name, ds.dsName);
+                try (RrdDb rrd = (RrdDb) graphNode.getProbe().getMainStore().getStoreObject()) {
+                    DataProcessor dp = ei.getDataProcessor();
+                    for (GraphDesc.DsDesc ds : graphNode.getGraphDesc().getGraphElements()) {
+                        if (ds.graphType != GraphDesc.GraphType.COMMENT && ds.graphType != GraphDesc.GraphType.LEGEND) {
+                            if (ds.rpn != null) {
+                                dp.addDatasource(ds.name, ds.rpn);
+                            } else if (ds.dsName != null) {
+                                if (isDsPresent(rrd, ds.dsName)) {
+                                    ex.addSource(ds.name, ds.dsName);
+                                }
                             }
                         }
                     }
-                }
-                ex.fill(dp, ei);
-                dp.processData();
-                for (var info : seriesInfos) {
-                    var data = dp.getValues(info.getBinding().getLabel());
-                    var timestamps = dp.getTimestamps();
-                    var samples = new ArrayList<XYChart.Data<ZonedDateTime, Double>>();
-                    for (int i = 0; i < data.length - 1; i++) {
-                        samples.add(new XYChart.Data<>(ZonedDateTime.ofInstant(Instant.ofEpochSecond(timestamps[i]),
-                                this.getTimeZoneId()), data[i]));
+                    ex.fill(dp, ei);
+                    dp.processData();
+                    for (var info : seriesInfos) {
+                        var data = dp.getValues(info.getBinding().getLabel());
+                        var timestamps = dp.getTimestamps();
+                        var samples = new ArrayList<XYChart.Data<ZonedDateTime, Double>>();
+                        for (int i = 0; i < data.length - 1; i++) {
+                            samples.add(new XYChart.Data<>(ZonedDateTime.ofInstant(Instant.ofEpochSecond(timestamps[i]),
+                                    this.getTimeZoneId()), data[i]));
+                        }
+                        var seriesProc = new DoubleTimeSeriesProcessor();
+                        seriesProc.setData(samples);
+                        result.put(info, seriesProc);
                     }
-                    var seriesProc = new DoubleTimeSeriesProcessor();
-                    seriesProc.setData(samples);
-                    result.put(info, seriesProc);
                 }
             } catch (IOException e) {
                 throw new DataAdapterException("Error extracting data: " + e.getMessage(), e);
@@ -221,6 +229,16 @@ public class DemoDataAdapter extends BaseDataAdapter {
             throw new DataAdapterException("Could not open jrds image from " + archivePath + ": " + e.getMessage(), e);
         }
         super.onStart();
+    }
+
+    @Override
+    public DataAdapterInfo getAdapterInfo() {
+        return null;
+    }
+
+    @Override
+    public boolean isSortingRequired() {
+        return false;
     }
 
     @Override
