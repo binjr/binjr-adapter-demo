@@ -16,7 +16,6 @@
 
 package eu.binjr.sources.demo.adapters;
 
-import eu.binjr.common.io.IOUtils;
 import eu.binjr.common.logging.Logger;
 import eu.binjr.core.data.adapters.DataAdapter;
 import eu.binjr.core.data.exceptions.CannotInitializeDataAdapterException;
@@ -31,12 +30,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
 import java.net.URI;
 import java.nio.file.FileSystems;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -88,6 +85,7 @@ public class DemoDataAdapterDialog extends Dialog<Collection<DataAdapter>> {
                     }
                     result.add(new LogsDataAdapter(
                             logPath,
+                            ZoneId.systemDefault(),
                             new String[]{"*"},
                             new String[]{"*.log"},
                             BuiltInParsingProfile.BINJR_STRICT) );
