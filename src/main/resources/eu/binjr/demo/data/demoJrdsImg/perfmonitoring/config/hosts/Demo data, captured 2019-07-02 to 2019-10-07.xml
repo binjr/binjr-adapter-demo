@@ -15,7 +15,6 @@
   -->
 
 <host name="Demo data, captured 2019-07-02 to 2019-10-07" >
-  <probe label="front-server" type="JMXConcMarkSweepGC8"/>
   <probe timer="systemPoll" type="Meminfo26"/>
   <probe type="CpuStatsLinux"/>
   <probe timer="systemPoll" type="ProcessInfo26">
