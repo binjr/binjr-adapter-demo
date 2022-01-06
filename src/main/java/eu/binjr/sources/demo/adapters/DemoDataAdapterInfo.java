@@ -31,7 +31,7 @@ import eu.binjr.core.data.exceptions.CannotInitializeDataAdapterException;
 @AdapterMetadata(
         name = "Demo",
         description = "Demo Data Adapter",
-        copyright = "Copyright © 2019-2020 Frederic Thevenet",
+        copyright = "Copyright © 2019-2022 Frederic Thevenet",
         license = "Apache-2.0",
         siteUrl = "https://github.com/binjr/binjr-adapter-demo",
         adapterClass = DemoDataAdapter.class,

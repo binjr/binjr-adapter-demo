@@ -16,9 +16,8 @@
 
 package eu.binjr.sources.demo.jrds;
 
+import eu.binjr.common.logging.Logger;
 import eu.binjr.common.logging.Profiler;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -34,7 +33,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class ZipUtils {
-    private static final Logger logger = LogManager.getLogger(ZipUtils.class);
+    private static final Logger logger = Logger.create(ZipUtils.class);
     private static final int MAX_BLOCKING_QUEUE_CAPACITY = 100000;
 
     public static Path unzip(Path zipFilePath, Predicate<String> filter, Path outputDirectory, int nbThreads) throws Exception {
@@ -45,7 +44,7 @@ public class ZipUtils {
         final AtomicBoolean taskDone = new AtomicBoolean(false);
         final AtomicBoolean taskAborted = new AtomicBoolean(false);
         AtomicLong nbFiles = new AtomicLong(0);
-        try (Profiler p = Profiler.start(e -> logger.trace("Unzipped " + nbFiles.get() + " files from  " + zipFilePath + " in parallel on " + nbThreads + " threads: " + e.toMilliString()))) {
+        try (Profiler p = Profiler.start(e -> logger.perf("Unzipped " + nbFiles.get() + " files from  " + zipFilePath + " in parallel on " + nbThreads + " threads: " + e.toMilliString()))) {
             try (ZipFile zipFile = new ZipFile(zipFilePath.toFile())) {
                 final Enumeration<? extends ZipEntry> entries = zipFile.entries();
                 AtomicInteger threadNum = new AtomicInteger(0);
@@ -77,6 +76,7 @@ public class ZipUtils {
                             } catch (Throwable t) {
                                 // Signal that worker thread was aborted and rethrow
                                 taskAborted.set(true);
+                                queue.clear();
                                 throw t;
                             }
                         } while (!taskDone.get() && !taskAborted.get() && !Thread.currentThread().isInterrupted());

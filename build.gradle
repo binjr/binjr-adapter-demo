@@ -4,7 +4,7 @@ import org.gradle.api.internal.file.copy.CopyActionProcessingStream
 import java.text.SimpleDateFormat
 
 /*
- *    Copyright 2019-2021 Frederic Thevenet
+ *    Copyright 2019-2022 Frederic Thevenet
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -22,14 +22,13 @@ import java.text.SimpleDateFormat
 plugins {
     id 'java'
     id 'application'
-    id "io.freefair.lombok" version "5.1.0"
     id 'org.kordamp.gradle.markdown' version '2.2.0'
     id "signing"
 }
 
 ext.IS_TAG = System.getenv('IS_TAG') != null ? System.getenv('IS_TAG') == "true" : false
 ext.IS_RELEASE = IS_TAG && !(System.getenv('REPO_TAG_NAME').endsWith('-SNAPSHOT'))
-ext.VERSION_STEM = "3.0.0"
+ext.VERSION_STEM = "3.1.0"
 ext.PRODUCT_VERSION = "${VERSION_STEM}${IS_RELEASE ? '' : '-SNAPSHOT'}"
 ext.OS_NAME = System.getProperty("os.name").toLowerCase()
 ext.OS_ARCH = System.getProperty("os.arch")
@@ -44,7 +43,7 @@ ext.DISTRIBUTION_NAME = "${project.name}-${PRODUCT_VERSION}"
 ext.DISTRIBUTION_PATH = "${buildDir}/distributions/${DISTRIBUTION_NAME}"
 ext.DISTRIBUTION_EXTENSION = "zip"
 
-ext.BINJR_VERSION = '3.0.1'
+ext.BINJR_VERSION = '3.5.0'
 
 ext."signing.keyId" = System.getenv('GPG_KEY_NAME')
 ext."signing.secretKeyRingFile" = System.getenv('GPG_KEYRING_PATH')
@@ -53,8 +52,8 @@ ext."signing.password" = System.getenv('GPG_PASSPHRASE')
 group 'eu.binjr'
 version "${PRODUCT_VERSION}"
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 17
+targetCompatibility = 17
 description 'binjr demo adapter'
 compileJava.options.encoding = 'UTF-8'
 
@@ -68,12 +67,12 @@ dependencies {
 
     compileOnly "eu.binjr:binjr-adapter-logs:${BINJR_VERSION}"
 
-    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.14.1") {
+    implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.1") {
         exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
         exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
     }
 
-    implementation("org.apache.logging.log4j:log4j-1.2-api:2.14.1") {
+    implementation("org.apache.logging.log4j:log4j-1.2-api:2.17.1") {
         exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
         exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
     }
@@ -145,10 +144,6 @@ task copyPluginLibs(type: Copy, dependsOn: shaded) {
     from project.shaded
 }
 
-task copyPubKey(type: Copy) {
-    into "${buildDir}"
-    from "${projectDir}/distribution/publishing/Public_key-412EC8A85400AC3F.asc"
-}
 
 task copyInfo(type: Copy) {
     from "${projectDir}/distribution/info"
@@ -198,7 +193,7 @@ markdownToHtml {
     }
 }
 
-task packageDistributionZip(type: Zip,  dependsOn: [copyPluginLibs, copyPubKey, markdownToHtml]) {
+task packageDistributionZip(type: Zip,  dependsOn: [copyPluginLibs, markdownToHtml]) {
     from DISTRIBUTION_PATH
     destinationDir buildDir
     archiveName "${DISTRIBUTION_NAME}.zip"

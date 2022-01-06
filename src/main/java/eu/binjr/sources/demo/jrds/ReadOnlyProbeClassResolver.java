@@ -1,27 +1,9 @@
-/*
- *    Copyright 2020 Frederic Thevenet
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- */
-
 package eu.binjr.sources.demo.jrds;
 
 import jrds.Probe;
 import jrds.configuration.ProbeClassResolver;
 import jrds.factories.ProbeBean;
 import jrds.probe.IndexedProbe;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Collections;
 import java.util.List;
@@ -31,29 +13,11 @@ public class ReadOnlyProbeClassResolver extends ProbeClassResolver {
 
     @ProbeBean({"port", "instance", "processName", "global", "hostagent", "commandLine"})
     public static class DummyProbe extends Probe<Object, Object> {
-
-        @Getter
-        @Setter
         private Integer port = 0;
-
-        @Getter
-        @Setter
         private String instance = "instance";
-
-        @Getter
-        @Setter
         private String processName = "processName";
-
-        @Getter
-        @Setter
         private String global = "global";
-
-        @Getter
-        @Setter
         private String hostagent = "hostagent";
-
-        @Getter
-        @Setter
         private String commandLine = "commandLine";
 
         @Override
@@ -86,17 +50,59 @@ public class ReadOnlyProbeClassResolver extends ProbeClassResolver {
         public boolean checkStore() {
             return true;
         }
+
+        public Integer getPort() {
+            return port;
+        }
+
+        public void setPort(Integer port) {
+            this.port = port;
+        }
+
+        public String getInstance() {
+            return instance;
+        }
+
+        public void setInstance(String instance) {
+            this.instance = instance;
+        }
+
+        public String getProcessName() {
+            return processName;
+        }
+
+        public void setProcessName(String processName) {
+            this.processName = processName;
+        }
+
+        public String getGlobal() {
+            return global;
+        }
+
+        public void setGlobal(String global) {
+            this.global = global;
+        }
+
+        public String getHostagent() {
+            return hostagent;
+        }
+
+        public void setHostagent(String hostagent) {
+            this.hostagent = hostagent;
+        }
+
+        public String getCommandLine() {
+            return commandLine;
+        }
+
+        public void setCommandLine(String commandLine) {
+            this.commandLine = commandLine;
+        }
     }
 
     @ProbeBean({"index", "pattern"})
     public static class DummyProbeIndexed extends DummyProbe implements IndexedProbe {
-
-        @Getter
-        @Setter
         private String index = "NA";
-
-        @Getter
-        @Setter
         private String pattern = "pattern";
 
         @Override
@@ -122,6 +128,22 @@ public class ReadOnlyProbeClassResolver extends ProbeClassResolver {
         public Boolean configure(String index, String s2) {
             this.index = index;
             return true;
+        }
+
+        public String getPattern() {
+            return pattern;
+        }
+
+        public void setPattern(String pattern) {
+            this.pattern = pattern;
+        }
+
+        public String getIndex() {
+            return index;
+        }
+
+        public void setIndex(String index) {
+            this.index = index;
         }
     }
 
