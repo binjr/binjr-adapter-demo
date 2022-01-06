@@ -20,8 +20,20 @@ jobs:
     pool:
       vmImage: 'ubuntu-latest'
     steps:
-      - checkout: self 
+      - checkout: self
         lfs: true
+
+      - script: |
+          curl 'https://cdn.azul.com/zulu/bin/zulu17.30.15-ca-jdk17.0.1-linux_x64.tar.gz' --output $(Agent.TempDirectory)/jdk-latest-linux_x64.tar.gz
+
+      - task: JavaToolInstaller@0
+        inputs:
+          versionSpec: "17"
+          jdkArchitectureOption: x64
+          jdkSourceOption: LocalDirectory
+          jdkFile: $(Agent.TempDirectory)/jdk-latest-linux_x64.tar.gz
+          jdkDestinationDirectory: $(Agent.ToolsDirectory)/binaries/openjdk
+          cleanDestinationDirectory: true
 
       - task: DownloadSecureFile@1
         name: gpgKeyring
@@ -49,7 +61,7 @@ jobs:
           gradleWrapperFile: 'gradlew'
           gradleOptions: '-Xmx3072m'
           javaHomeOption: 'JDKVersion'
-          jdkVersionOption: '1.11'
+          jdkVersionOption: '1.17'
           jdkArchitectureOption: 'x64'
           publishJUnitResults: false
           testResultsFiles: '**/TEST-*.xml'
