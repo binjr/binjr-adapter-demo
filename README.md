@@ -8,8 +8,8 @@ A plugin for binjr that provides data sources for demonstration purposes.
 ## Trying it out
 1. Make sure [binjr](https://binjr.eu) is installed on your system (visit https://binjr.eu to get the latest release) 
    and make a note of the folder it is installed in.
-2. Download the `binjr-adapter-demo-1.x.x.zip` archive from [the releases page](https://github.com/binjr/binjr-adapter-demo/releases).
-3. Copy the `binjr-adapter-demo-1.x.x.jar` file contained in the zip file into the `plugins` folder of your 
+2. Download the `binjr-adapter-demo-x.x.x.zip` archive from [the releases page](https://github.com/binjr/binjr-adapter-demo/releases).
+3. Copy the `binjr-adapter-demo-x.x.x.jar` file contained in the zip file into the `plugins` folder of your 
    [binjr](https://binjr.eu) installation.
 4. Start [binjr](https://binjr.eu) (or restart it if it was runnning when you copied the plugin) and open the `demo.bjr`
    workspace contained in the zip (from the command menu, select `Workspaces > Open...`, or press Ctrl+O) 
@@ -18,7 +18,7 @@ A plugin for binjr that provides data sources for demonstration purposes.
 ## Troubleshooting
 * _"I get a `Could not find a registered adapter for key eu.binjr.sources.demo.adapters.DemoDataAdapter` error message when trying to open the demo.bjr workspace."_  
 
-   Please ensure that the `binjr-adapter-demo-1.x.x.jar` file is present in binjr's `plugins` folder and that is has been 
+   Please ensure that the `binjr-adapter-demo-x.x.x.jar` file is present in binjr's `plugins` folder and that is has been 
    properly loaded.  
    * From the settings panel, expend the `Data Adapter` section and check that the "Demo Data Adpater" is listed in 
    the Available Data Adpaters table.  
