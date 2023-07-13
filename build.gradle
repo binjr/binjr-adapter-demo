@@ -195,14 +195,14 @@ markdownToHtml {
 
 task packageDistributionZip(type: Zip,  dependsOn: [copyPluginLibs, markdownToHtml]) {
     from DISTRIBUTION_PATH
-    destinationDir buildDir
-    archiveName "${DISTRIBUTION_NAME}.zip"
+    destinationDirectory = buildDir
+    archiveFileName = "${DISTRIBUTION_NAME}.zip"
 }
 
 task packageDistribution(type: WrapTaskForSigning, dependsOn: packageDistributionZip){
     from "${buildDir}/${DISTRIBUTION_NAME}.${DISTRIBUTION_EXTENSION}"
-    destinationDir buildDir
-    archiveName "${DISTRIBUTION_NAME}.${DISTRIBUTION_EXTENSION}"
+    destinationDirectory = buildDir
+    archiveFileName = "${DISTRIBUTION_NAME}.${DISTRIBUTION_EXTENSION}"
 }
 
 signing {
