@@ -232,11 +232,6 @@ public class DemoDataAdapter extends BaseDataAdapter<Double> {
     }
 
     @Override
-    public DataAdapterInfo getAdapterInfo() {
-        return null;
-    }
-
-    @Override
     public boolean isSortingRequired() {
         return false;
     }
